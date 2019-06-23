@@ -13,4 +13,6 @@
 		</form>
 	</div>
 </div>
+<br>
+<a class="btn btn-primary" href="/categories">View All Categories</a>
 @endsection
