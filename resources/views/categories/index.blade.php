@@ -8,4 +8,5 @@
 			@endif
 		@endforeach
 	</ul>
+	<a href="/categories/create" class="btn btn-primary">Add New Category</a>
 @endsection
