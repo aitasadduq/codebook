@@ -5,7 +5,7 @@
 		<h1>Add New Category</h1>
 	</div>
 	<div class="card-body">
-		<form method="POST" action="categories/">
+		<form method="POST" action="/categories">
 			@csrf
 			<input type="text" name="title" class="form-control" placeholder="Title">
 			<br>
