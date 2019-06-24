@@ -1,13 +1,15 @@
 @extends('layouts/app')
 @section('content')
 	<h1>{{ $category->title }}</h1>
+	<br>
 	@if ($category->subCategories->count())
-	<ul style="list-style: none;">
+	<ul class="list-group col-md-4">
 		@foreach ($category->subCategories as $sub)
-		<li>{{ $sub->title }} <a href="/categories/{{ $sub->id }}/edit">Edit</a></li>
+		<li class="list-group-item d-flex justify-content-between align-items-center">{{ $sub->title }} <span  class="badge badge-primary badge-pill"><a style="color: white;" href="/categories/{{ $sub->id }}/edit">Edit</a></span></li>
 		@endforeach
 	</ul>
 	@endif
+	<br>
 	<div class="card">
 		<div class="card-body">
 			<form method="POST" action="/categories">
