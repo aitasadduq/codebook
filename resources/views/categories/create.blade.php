@@ -7,6 +7,7 @@
 	<div class="card-body">
 		<form method="POST" action="/categories">
 			@csrf
+			<input type="hidden" name="category_id" value="0">
 			<input type="text" name="title" class="form-control" placeholder="Title">
 			<br>
 			<input class="btn btn-primary" type="submit" name="submit" value="Add Category">

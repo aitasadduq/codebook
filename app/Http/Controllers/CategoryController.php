@@ -36,9 +36,29 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Category $category)
     {
         //
+        $attributes = request()->validate([
+            'title' => 'required | min:3'
+        ]);
+        $parent_id = request()->get('category_id');
+        // dd($parent_id);
+        if ($parent_id == 0)
+        {
+            $category = Category::create($attributes);
+            return redirect('/categories');
+        }
+        // $attributes['category_id'] = (int) $parent_id;
+        // $attributes = array_merge(['category_id' => (int) $parent_id], $attributes);
+        Category::find($parent_id)->subCategories()->create($attributes);
+        // $category->subCategories()->create(['title'=>request()->get('title')]);
+
+        // dd($attributes);
+        // $sub = Category::create($attributes);
+        // // dd($attributes);
+        // $category->addSubCategory($sub);
+        return back();
     }
 
     /**
@@ -66,6 +86,7 @@ class CategoryController extends Controller
     public function edit(Category $category)
     {
         //
+        return view('categories.edit', compact('category'));
     }
 
     /**
@@ -78,6 +99,15 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         //
+        $attributes = request()->validate([
+            'title' => 'required | min:3'
+        ]);
+        $category->update($attributes);
+        if ($category->category_id == 0)
+        {
+            return redirect('/categories');
+        }
+        return redirect('/categories/'.(string) $category->category_id);
     }
 
     /**
@@ -88,6 +118,11 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        if ($category->category_id == 0)
+        {
+            return redirect('/categories');
+        }
+        return redirect('/categories/'.(string) $category->category_id);
     }
 }
