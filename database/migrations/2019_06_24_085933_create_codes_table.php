@@ -16,6 +16,7 @@ class CreateCodesTable extends Migration
         Schema::create('codes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('code_id');
+            $table->string('title');
             $table->text('code');
             $table->text('details');
             $table->timestamps();
