@@ -22,4 +22,9 @@ class Category extends Model
     {
     	return $this->belongsTo(Category::class);
     }
+
+    public function codes ()
+    {
+        return $this->belongsToMany(Code::class);
+    }
 }
