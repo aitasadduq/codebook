@@ -13,11 +13,9 @@ class Category extends Model
     	return $this->hasMany(Category::class);
     }
 
-    public function addSubCategory ($category)
+    public function addSubCategory ($attributes)
     {
-        // dd($attributes);
-    	// return $this->subCategories()->create($attributes);
-        return $this->subCategories()->save($category);
+        return $this->subCategories()->create($attributes);
     }
 
     public function parent ()

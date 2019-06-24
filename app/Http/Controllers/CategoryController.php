@@ -14,7 +14,6 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
         $categories = Category::all();
         return view('categories.index', compact('categories'));
     }
@@ -26,7 +25,6 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
         return view('categories.create');
     }
 
@@ -36,28 +34,19 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Category $category)
+    public function store()
     {
-        //
         $attributes = request()->validate([
-            'title' => 'required | min:3'
+            'title' => 'required | min:1'
         ]);
         $parent_id = request()->get('category_id');
-        // dd($parent_id);
         if ($parent_id == 0)
         {
             $category = Category::create($attributes);
             return redirect('/categories');
         }
-        // $attributes['category_id'] = (int) $parent_id;
-        // $attributes = array_merge(['category_id' => (int) $parent_id], $attributes);
-        Category::find($parent_id)->subCategories()->create($attributes);
-        // $category->subCategories()->create(['title'=>request()->get('title')]);
-
-        // dd($attributes);
-        // $sub = Category::create($attributes);
-        // // dd($attributes);
-        // $category->addSubCategory($sub);
+        $category = Category::find($parent_id);
+        $category->addSubcategory($attributes);
         return back();
     }
 
@@ -69,7 +58,6 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
         if ($category->parent_id == 0)
         {
             return view('categories.show', compact('category'));
@@ -85,7 +73,6 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
         return view('categories.edit', compact('category'));
     }
 
@@ -98,9 +85,8 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
         $attributes = request()->validate([
-            'title' => 'required | min:3'
+            'title' => 'required | min:1'
         ]);
         $category->update($attributes);
         if ($category->category_id == 0)
