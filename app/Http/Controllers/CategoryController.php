@@ -37,7 +37,7 @@ class CategoryController extends Controller
     public function store()
     {
         $attributes = request()->validate([
-            'title' => 'required | min:1'
+            'title' => 'required | min:1 | max:12'
         ]);
         $parent_id = request()->get('category_id');
         if ($parent_id == 0)
