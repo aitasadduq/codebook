@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Code;
+use App\Category;
 use Illuminate\Http\Request;
 
 class CodeController extends Controller
@@ -25,7 +26,8 @@ class CodeController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('codes.create', compact('categories'));
     }
 
     /**
@@ -36,7 +38,30 @@ class CodeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attributes = request()->validate([
+            'title' => 'required|min:3',
+            'details' => 'required|min:3',
+            'code' => 'required|min:3'
+        ]);
+        $parent_id = request()->get('code_id');
+        $subs = array();
+        if ($parent_id == 0)
+        {
+            foreach (Category::all()->pluck('id') as $id)
+            {
+                if (Category::find($id)->category_id != 0)
+                {
+                    if (request()->has($id))
+                    {
+                        $subs[] = $id;
+                    }
+                }
+            }
+            $code = Code::create($attributes);
+            $categories = Category::find($subs);
+            $code->categories()->attach($categories);
+            return "Success!";
+        }
     }
 
     /**
