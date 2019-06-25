@@ -58,7 +58,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        if ($category->parent_id == 0)
+        if ($category->category_id == 0)
         {
             return view('categories.show', compact('category'));
         }

@@ -72,7 +72,11 @@ class CodeController extends Controller
      */
     public function show(Code $code)
     {
-        //
+        if ($code->code_id == 0)
+        {
+            return view('codes.show', compact('code'));
+        }
+        return redirect('codes');
     }
 
     /**
