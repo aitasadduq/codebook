@@ -36,18 +36,9 @@ class CategoryController extends Controller
      */
     public function store()
     {
-        $attributes = request()->validate([
-            'title' => 'required | min:1 | max:12'
-        ]);
-        $parent_id = request()->get('category_id');
-        if ($parent_id == 0)
-        {
-            $category = Category::create($attributes);
-            return redirect('/categories');
-        }
-        $category = Category::find($parent_id);
-        $category->addSubcategory($attributes);
-        return back();
+        $attributes = $this->validateCategory();
+        $category = Category::create($attributes);
+        return redirect('/categories');
     }
 
     /**
@@ -110,5 +101,13 @@ class CategoryController extends Controller
             return redirect('/categories');
         }
         return redirect('/categories/'.(string) $category->category_id);
+    }
+
+    public function validateCategory ()
+    {
+        return request()->validate([
+            'title' => 'required | min:1',
+            'description' => 'required | min:3'
+        ]);
     }
 }
