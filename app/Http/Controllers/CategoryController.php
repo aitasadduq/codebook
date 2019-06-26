@@ -49,11 +49,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        if ($category->category_id == 0)
-        {
-            return view('categories.show', compact('category'));
-        }
-        return redirect('categories');
+        return view('categories.show', compact('category'));
     }
 
     /**
@@ -76,15 +72,9 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        $attributes = request()->validate([
-            'title' => 'required | min:1'
-        ]);
+        $attributes = $this->validateCategory();
         $category->update($attributes);
-        if ($category->category_id == 0)
-        {
-            return redirect('/categories');
-        }
-        return redirect('/categories/'.(string) $category->category_id);
+        return redirect('/categories');
     }
 
     /**
@@ -96,11 +86,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        if ($category->category_id == 0)
-        {
-            return redirect('/categories');
-        }
-        return redirect('/categories/'.(string) $category->category_id);
+        return redirect('/categories');
     }
 
     public function validateCategory ()
