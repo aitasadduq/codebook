@@ -2,62 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Subcategory;
 use Illuminate\Http\Request;
 
 class SubcategoryController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Category $category)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Subcategory  $subcategory
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Subcategory $subcategory)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Subcategory  $subcategory
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Subcategory $subcategory)
-    {
-        //
+        $attributes = $this->validateSubcategory();
+        $category->addSubcategory($attributes);
+        return back();
     }
 
     /**
@@ -67,9 +28,11 @@ class SubcategoryController extends Controller
      * @param  \App\Subcategory  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Subcategory $subcategory)
+    public function update(Category $category, Subcategory $subcategory)
     {
-        //
+        $attributes = $this->validateSubcategory();
+        $subcategory->update($attributes);
+        return back();
     }
 
     /**
@@ -80,6 +43,14 @@ class SubcategoryController extends Controller
      */
     public function destroy(Subcategory $subcategory)
     {
-        //
+        $subcategory->delete();
+        return back();
+    }
+
+    public function validateSubcategory ()
+    {
+        request()->validate([
+            'title' => 'required | min:3'
+        ]);
     }
 }
