@@ -10,7 +10,7 @@
                 <h4 class="card-title text-center">{{ $cat->title }}</h4>
                 <p class="card-text">{{ $cat->description }}</p>
                 <div class="text-center">
-                    <a class="btn btn-primary" href="/codes">View Codes</a>
+                    <a class="btn btn-primary" href="/categories/{{ $cat->id }}/codes">View Codes</a>
                 </div>
             </div>
         </div>
