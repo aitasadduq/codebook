@@ -1,5 +1,7 @@
 <?php
 
+use App\Category;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +14,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+	$categories = Category::all();
+    return view('welcome', compact('categories'));
+    // return redirect('categories');
 });
 Route::resource('categories', 'CategoryController');
 Route::resource('codes', 'CodeController');
