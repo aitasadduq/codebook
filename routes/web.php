@@ -19,13 +19,8 @@ Route::get('/', function () {
     // return redirect('categories');
 });
 Route::resource('categories', 'CategoryController');
-Route::get('categories/{category}/codes', 'CodeController@index');
-Route::get('categories/{category}/codes/create', 'CodeController@create');
-Route::post('categories/{category}/codes', 'CodeController@store');
-Route::get('categories/{category}/codes/{code}', 'CodeController@show');
-Route::get('categories/{category}/codes/{code}/edit', 'CodeController@edit');
-Route::patch('categories/{category}/codes/{code}', 'CodeController@update');
-Route::delete('categories/{category}/codes/{code}', 'CodeController@destroy');
+Route::resource('categories/{category}/codes', 'CodeController');
+Route::resource('categories/{category}/subcategories', 'SubcategoryController');
 
 Auth::routes();
 
