@@ -8,9 +8,9 @@ class Code extends Model
 {
     protected $guarded = [];
 
-    public function categories ()
+    public function category ()
     {
-    	return $this->belongsToMany(Category::class);
+    	return $this->belongsTo(Category::class);
     }
 
     public function childCodes ()
@@ -26,5 +26,10 @@ class Code extends Model
     public function addChildCode ($attributes)
     {
     	return $this->childCodes()->create($attributes);
+    }
+
+    public function subcategories ()
+    {
+        return $this->belongsToMany(Subcategory::class);
     }
 }

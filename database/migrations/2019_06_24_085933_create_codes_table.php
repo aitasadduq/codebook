@@ -16,9 +16,10 @@ class CreateCodesTable extends Migration
         Schema::create('codes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedInteger('code_id');
+            $table->unsignedInteger('category_id');
             $table->string('title');
-            $table->text('code');
             $table->text('details');
+            $table->text('code');
             $table->timestamps();
         });
     }
