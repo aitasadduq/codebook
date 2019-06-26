@@ -21,6 +21,11 @@ class SubcategoryController extends Controller
         return back();
     }
 
+    public function edit (Category $category, Subcategory $subcategory)
+    {
+        return view('subcategories.edit', compact('category', 'subcategory'));
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -32,7 +37,7 @@ class SubcategoryController extends Controller
     {
         $attributes = $this->validateSubcategory();
         $subcategory->update($attributes);
-        return back();
+        return redirect('/categories/'.strval($category->id));
     }
 
     /**
@@ -49,7 +54,7 @@ class SubcategoryController extends Controller
 
     public function validateSubcategory ()
     {
-        request()->validate([
+        return request()->validate([
             'title' => 'required | min:3'
         ]);
     }
