@@ -1,10 +1,8 @@
 @extends('layouts.app')
 @section('content')
 <div class="card">
-	<div class="card-header">
-		<h1>Add New Category</h1>
-	</div>
 	<div class="card-body">
+		<h1 class="card-title">Add New Category</h1>
 		<form method="POST" action="/categories">
 			@csrf
 			<div class="form-group">

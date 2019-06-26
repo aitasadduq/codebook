@@ -1,10 +1,8 @@
 @extends('layouts.app')
 @section('content')
 <div class="card">
-	<div class="card-header">
-		<h1>Edit Category</h1>
-	</div>
 	<div class="card-body">
+		<h1 class="card-title">Edit Category</h1>
 		<form method="POST" action="/categories/{{ $category->id }}">
 			@csrf
 			@method('PATCH')
