@@ -2,6 +2,9 @@
 @section('content')
 	<h1>{{ $category->title }}</h1>
 	<br>
+	<h4>{{ $category->description }}</h4>
+	<br>
+	<h2>Subcategories:</h2>
 	@if ($category->subCategories->count())
 	<ul class="list-group col-md-4">
 		@foreach ($category->subCategories as $sub)
@@ -16,7 +19,7 @@
 				@csrf
 				<input class="form-control" type="text" name="title" placeholder="Title">
 				<br>
-				<input class="btn btn-primary" type="submit" name="submit" value="Add Sub-category">
+				<input class="btn btn-primary" type="submit" name="submit" value="Add Subcategory">
 			</form>
 		</div>
 	</div>

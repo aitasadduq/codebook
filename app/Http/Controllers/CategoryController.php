@@ -74,7 +74,7 @@ class CategoryController extends Controller
     {
         $attributes = $this->validateCategory();
         $category->update($attributes);
-        return redirect('/categories');
+        return redirect('/categories/'.strval($category->id));
     }
 
     /**
