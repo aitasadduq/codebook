@@ -10,9 +10,15 @@
 				@method('PATCH')
 				<div class="form-group text-left">
 					<label for="title" >Title</label>
-					<input class="form-control" type="text" name="title" id="title">
+					<input class="form-control" type="text" name="title" id="title" value="{{ $subcategory->title }}">
 				</div>
 				<input class="btn btn-primary" type="submit" name="submit" value="Edit Subcategory">
+			</form>
+			<br>
+			<form method="POST" action="/categories/{{ $category->id }}/subcategories/{{ $subcategory->id }}">
+				@csrf
+				@method('DELETE')
+				<input class="btn btn-danger" type="submit" name="submit" value="Delete Subcategory">
 			</form>
 		</div>
 	</div>
