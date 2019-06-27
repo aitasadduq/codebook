@@ -84,7 +84,7 @@ class CodeController extends Controller
      * @param  \App\Code  $code
      * @return \Illuminate\Http\Response
      */
-    public function show(Code $code)
+    public function show(Category $category, Code $code)
     {
         if ($code->code_id == 0)
         {
