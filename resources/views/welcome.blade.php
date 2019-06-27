@@ -10,7 +10,12 @@
                 <h4 class="card-title text-center">{{ $cat->title }}</h4>
                 <p class="card-text">{{ $cat->description }}</p>
                 <div class="text-center">
-                    <a class="btn btn-primary" href="/categories/{{ $cat->id }}/codes">View Codes</a>
+                    <form method="GET" action="/categories/{{ $cat->id }}/codes">
+                        @csrf
+                        <input type="hidden" name="is_filter" value="0">
+                        <input class="btn btn-primary" type="submit" name="submit" value="View Codes">
+                    </form>
+                    {{-- <a class="btn btn-primary" href="/categories/{{ $cat->id }}/codes">View Codes</a> --}}
                 </div>
             </div>
         </div>

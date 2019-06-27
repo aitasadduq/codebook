@@ -16,7 +16,23 @@ class CodeController extends Controller
      */
     public function index(Category $category)
     {
-        return view('codes.index', compact('category'));
+        $codes = collect([]);
+        if (request()->get('is_filter') === "1")
+        {
+            foreach($category->subCategories as $sub)
+            {
+                if (request()->has($sub->id))
+                {
+                    $codes = $codes->toBase()->merge($sub->codes);
+                }
+            }
+            $codes = $codes->unique('id');
+        }
+        else
+        {
+            $codes = $category->codes;
+        }
+        return view('codes.index', compact('category', 'codes'));
     }
 
     /**

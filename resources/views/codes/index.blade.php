@@ -4,7 +4,9 @@
 <br>
 <div class="row">
 	<div class="col-md-3">
-		<form method="POST" action="/categories/{{ $category->id }}/codes">
+		<form method="GET" action="/categories/{{ $category->id }}/codes">
+			@csrf
+			<input type="hidden" name="is_filter" value="1">
 			<div class="card">
 				<div class="card-body text-center">
 					<h3 class="card-title">Subcategories</h3>
@@ -27,7 +29,7 @@
 	</div>
 	<div class="col-md-9">
 		<ul class="list-group">
-			@foreach($category->codes as $code)
+			@foreach($codes as $code)
 				@if($code->code_id == 0)
 					<li class="list-group-item d-flex justify-content-between align-items-center">
 						<a href="/codes/{{ $code->id }}">{{ $code->title }}</a>
