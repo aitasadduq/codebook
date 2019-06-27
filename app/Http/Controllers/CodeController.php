@@ -13,10 +13,10 @@ class CodeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Category $category)
     {
-        $codes = Code::all();
-        return view('codes.index', compact('codes'));
+        $codes = $category->codes();
+        return view('codes.index', compact('codes', 'category'));
     }
 
     /**
@@ -24,10 +24,9 @@ class CodeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Category $category)
     {
-        $categories = Category::all();
-        return view('codes.create', compact('categories'));
+        return view('codes.create', compact('category'));
     }
 
     /**
