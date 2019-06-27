@@ -28,22 +28,24 @@
 		</form>
 	</div>
 	<div class="col-md-9">
-		<ul class="list-group">
-			@foreach($codes as $code)
-				@if($code->code_id == 0)
-					<li class="list-group-item d-flex justify-content-between align-items-center">
-						<a href="/codes/{{ $code->id }}">{{ $code->title }}</a>
-						<div>
+		@foreach($codes as $code)
+			@if($code->code_id == 0)
+				<div class="card">
+					<div class="card-body">
+						<h3><a class="card-title" href="/categories/{{ $category->id }}/codes/{{ $code->id }}">{{ $code->title }}</a></h3>
+						<p class="card-text">{{ $code->details }}</p>
+						<div class="text-right">
 							@foreach($code->subcategories as $sub)
 							<span class="badge badge-primary badge-pill">
 								{{ $sub->title }}
 							</span>
 							@endforeach
 						</div>
-					</li>
-				@endif
-			@endforeach
-		</ul>
+					</div>
+				</div>
+				<br>
+			@endif
+		@endforeach
 	</div>
 </div>
 <br>
