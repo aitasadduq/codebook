@@ -3,7 +3,7 @@
 <div class="card text-center">
 	<div class="card-body">
 		<h1 class="card-title">Add New Code</h1>
-		<form method="POST" action="/codes">
+		<form method="POST" action="/categories/{{ $category->id }}/codes">
 			@csrf
 			<input type="hidden" name="code_id" value="0">
 			<div class="row">

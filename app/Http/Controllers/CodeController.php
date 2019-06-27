@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Code;
 use App\Category;
+use App\Subcategory;
 use Illuminate\Http\Request;
 
 class CodeController extends Controller
@@ -15,8 +16,7 @@ class CodeController extends Controller
      */
     public function index(Category $category)
     {
-        $codes = $category->codes();
-        return view('codes.index', compact('codes', 'category'));
+        return view('codes.index', compact('category'));
     }
 
     /**
@@ -35,31 +35,30 @@ class CodeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Category $category)
     {
         $attributes = request()->validate([
             'title' => 'required|min:3',
             'details' => 'required|min:3',
             'code' => 'required|min:3'
         ]);
+        $attributes['category_id'] = $category->id;
         $parent_id = request()->get('code_id');
         $subs = array();
         if ($parent_id == 0)
         {
-            foreach (Category::all()->pluck('id') as $id)
+            foreach ($category->subCategories as $sub)
             {
-                if (Category::find($id)->category_id != 0)
+                $id = $sub->id;
+                if (request()->has($id))
                 {
-                    if (request()->has($id))
-                    {
-                        $subs[] = $id;
-                    }
+                    $subs[] = $id;
                 }
             }
             $code = Code::create($attributes);
-            $categories = Category::find($subs);
-            $code->categories()->attach($categories);
-            return "Success!";
+            $subcategories = Subcategory::find($subs);
+            $code->subcategories()->attach($subcategories);
+            return redirect('/categories/'.strval($category->id).'/codes');
         }
     }
 
