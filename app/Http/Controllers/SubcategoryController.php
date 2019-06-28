@@ -46,10 +46,10 @@ class SubcategoryController extends Controller
      * @param  \App\Subcategory  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Subcategory $subcategory)
+    public function destroy(Category $category, Subcategory $subcategory)
     {
         $subcategory->delete();
-        return back();
+        return redirect('/categories/'.strval($category->id));
     }
 
     public function validateSubcategory ()
