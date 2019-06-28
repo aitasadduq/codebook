@@ -88,7 +88,7 @@ class CodeController extends Controller
     {
         if ($code->code_id == 0)
         {
-            return view('codes.show', compact('code'));
+            return view('codes.show', compact('category', 'code'));
         }
         return redirect('codes');
     }
