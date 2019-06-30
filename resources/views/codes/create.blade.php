@@ -23,30 +23,6 @@
 								</div>
 							</li>
 						@endforeach
-						{{-- @foreach ($categories as $category)
-							@if ($category->category_id == 0)
-								<li class="list-group-item">
-									<h5 class="card-header">{{ $category->title }}</h5>
-									<div class="card-body">
-										@if ($category->subCategories->count() === 0)
-											@php
-												$category->addSubCategory(['title' => $category->title]);
-											@endphp
-										@endif
-										<ul class="list-group">
-											@foreach ($category->subCategories as $sub)
-												<li class="list-group-item">
-													<div class="form-check">
-														<input class="form-check-input" type="checkbox" name="{{ $sub->id }}" id="{{ $sub->id}}">
-														<label class="form-check-label" for="{{ $sub->id }}">{{ $sub->title }}</label>
-													</div>
-												</li>
-											@endforeach
-										</ul>
-									</div>
-								</li>
-							@endif
-						@endforeach --}}
 					</ul>
 				</div>
 				<div class="col-md-8 box">

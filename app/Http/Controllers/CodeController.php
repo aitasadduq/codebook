@@ -53,16 +53,12 @@ class CodeController extends Controller
      */
     public function store(Category $category)
     {
-        $attributes = request()->validate([
-            'title' => 'required|min:3',
-            'details' => 'required|min:3',
-            'code' => 'required|min:3'
-        ]);
+        $attributes = $this->validateCode();
         $attributes['category_id'] = $category->id;
         $parent_id = request()->get('code_id');
-        $subs = array();
         if ($parent_id == 0)
         {
+            $subs = array();
             foreach ($category->subCategories as $sub)
             {
                 $id = $sub->id;
@@ -93,7 +89,7 @@ class CodeController extends Controller
         {
             return view('codes.show', compact('category', 'code'));
         }
-        return redirect('codes');
+        return redirect('/categories/'.strval($category->id).'/codes/'.strval($code->code_id));
     }
 
     /**
@@ -104,7 +100,7 @@ class CodeController extends Controller
      */
     public function edit(Category $category, Code $code)
     {
-        //
+        return view('codes.edit', compact('category', 'code'));
     }
 
     /**
@@ -114,9 +110,29 @@ class CodeController extends Controller
      * @param  \App\Code  $code
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Code $code)
+    public function update(Category $category, Code $code)
     {
-        //
+        $attributes = $this->validateCode();
+        $attributes['category_id'] = $category->id;
+        $parent_id = request()->get('code_id');
+        if ($parent_id == 0)
+        {
+            $subs = array();
+            foreach ($category->subCategories as $sub)
+            {
+                $id = $sub->id;
+                if (request()->has($id))
+                {
+                    $subs[] = $id;
+                }
+            }
+            $code->update($attributes);
+            $subcategories = Subcategory::find($subs);
+            $code->subcategories()->sync($subcategories);
+            return redirect('/categories/'.strval($category->id).'/codes/'.strval($code->id));
+        }
+        $code->update($attributes);
+        return redirect('/categories/'.strval($category->id).'/codes/'.strval($parent_id));
     }
 
     /**
@@ -128,5 +144,14 @@ class CodeController extends Controller
     public function destroy(Code $code)
     {
         //
+    }
+
+    public function validateCode ()
+    {
+        return request()->validate([
+            'title' => 'required|min:3',
+            'details' => 'required|min:3',
+            'code' => 'required|min:3'
+        ]);
     }
 }
