@@ -76,6 +76,9 @@ class CodeController extends Controller
             $code->subcategories()->attach($subcategories);
             return redirect('/categories/'.strval($category->id).'/codes');
         }
+        $code = Code::find($parent_id);
+        $code->addChildCode($attributes);
+        return back();
     }
 
     /**
