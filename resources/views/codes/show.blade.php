@@ -25,9 +25,29 @@
 				<hr>
 				<p>{{ $child->code }}</p>
 			</div>
+			<a class="btn btn-primary" href="/categories/{{ $category->id }}/codes/{{ $child->id }}/edit">Edit Child Code</a>
 		</div>
 		@endforeach
-
+		<div class="row">
+			<div class="col-md-2"></div>
+			<div class="card col-md-10">
+				<div class="card-body">
+					<h3 class="card-title">Add Child Code</h3>
+					<form method="POST" action="/categories/{{ $category->id }}/codes">
+						@csrf
+						<input class="form-control" type="text" name="title" placeholder="Title">
+						<br>
+						<textarea class="form-control" name="details" placeholder="Details"></textarea>
+						<br>
+						<textarea class="form-control" name="code" placeholder="Code"></textarea>
+						<br>
+						<div class="text-right">
+							<input class="btn btn-primary" type="submit" name="submit" value="Add Child Code">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 <br>
