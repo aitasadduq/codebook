@@ -99,7 +99,7 @@ class CodeController extends Controller
      * @param  \App\Code  $code
      * @return \Illuminate\Http\Response
      */
-    public function edit(Code $code)
+    public function edit(Category $category, Code $code)
     {
         //
     }
