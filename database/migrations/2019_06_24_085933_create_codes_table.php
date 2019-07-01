@@ -21,6 +21,8 @@ class CreateCodesTable extends Migration
             $table->text('details');
             $table->text('code');
             $table->timestamps();
+            $table->foreign('code_id')->references('id')->on('codes')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

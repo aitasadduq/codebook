@@ -18,6 +18,8 @@ class CreateCodeSubcategoryTable extends Migration
             $table->unsignedInteger('subcategory_id');
             $table->unsignedInteger('code_id');
             $table->timestamps();
+            $table->foreign('subcategory_id')->references('id')->on('subcategories')->onDelete('cascade');
+            $table->foreign('code_id')->references('id')->on('codes')->onDelete('cascade');
         });
     }
 
