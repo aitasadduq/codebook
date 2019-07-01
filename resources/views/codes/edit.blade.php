@@ -49,6 +49,11 @@
 				<input class="btn btn-primary" type="submit" name="submit" value="Edit {{ $text }}">
 			</div>
 		</form>
+		<form method="POST" action="/categories/{{ $category->id }}/codes/{{ $code->id }}">
+			@csrf
+			@method('DELETE')
+			<input class="btn btn-danger" type="submit" name="submit" value="Delete {{ $text }}">
+		</form>
 	</div>
 </div>
 @endsection

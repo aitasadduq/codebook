@@ -141,9 +141,15 @@ class CodeController extends Controller
      * @param  \App\Code  $code
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Code $code)
+    public function destroy(Category $category, Code $code)
     {
-        //
+        $parent_id = $code->code_id;
+        $code->delete();
+        if ($parent_id == 0)
+        {
+            return redirect('/categories/'.strval($category->id).'/codes');
+        }
+        return redirect('/categories/'.strval($category->id).'/codes/'.strval($parent_id));
     }
 
     public function validateCode ()
