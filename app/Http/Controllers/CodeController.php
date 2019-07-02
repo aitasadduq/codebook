@@ -143,13 +143,17 @@ class CodeController extends Controller
      */
     public function destroy(Category $category, Code $code)
     {
+        $path = '/categories/'.strval($category->id).'/codes/';
         $parent_id = $code->code_id;
-        $code->delete();
         if ($parent_id == 0)
         {
-            return redirect('/categories/'.strval($category->id).'/codes');
+            $code->childCodes()->delete();
         }
-        return redirect('/categories/'.strval($category->id).'/codes/'.strval($parent_id));
+        else {
+            $path = $path.strval($parent_id);
+        }
+        $code->delete();
+        return redirect($path);
     }
 
     public function validateCode ()

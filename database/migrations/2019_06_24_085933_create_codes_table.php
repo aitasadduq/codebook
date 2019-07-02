@@ -15,14 +15,16 @@ class CreateCodesTable extends Migration
     {
         Schema::create('codes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('code_id');
-            $table->unsignedInteger('category_id');
+            $table->unsignedBigInteger('code_id')->default(0);
+            $table->unsignedBigInteger('category_id');
             $table->string('title');
             $table->text('details');
             $table->text('code');
             $table->timestamps();
-            $table->foreign('code_id')->references('id')->on('codes')->onDelete('cascade');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+        });
+
+        Schema::table('codes', function (Blueprint $table) {
+            $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

@@ -15,11 +15,14 @@ class CreateCodeSubcategoryTable extends Migration
     {
         Schema::create('code_subcategory', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedInteger('subcategory_id');
-            $table->unsignedInteger('code_id');
+            $table->unsignedBigInteger('subcategory_id');
+            $table->unsignedBigInteger('code_id');
             $table->timestamps();
-            $table->foreign('subcategory_id')->references('id')->on('subcategories')->onDelete('cascade');
-            $table->foreign('code_id')->references('id')->on('codes')->onDelete('cascade');
+        });
+
+        Schema::table('code_subcategory', function (Blueprint $table) {
+            $table->foreign('code_id')->references('id')->on('codes')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('subcategory_id')->references('id')->on('subcategories')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
