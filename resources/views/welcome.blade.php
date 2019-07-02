@@ -2,6 +2,13 @@
 @section('content')
 <h1 class="text-center">Code Categories</h1>
 <br>
+@if ($categories->count() == 0)
+<div class="text-center">
+    <h4>No categories found.</h4>
+    <a href="/categories/create" class="btn btn-primary">Add New Category</a>
+</div>
+@endif
+<br>
 <div class="row">
     @foreach ($categories as $cat)
     <div class="col-md-4 col-sm-6 mb-4">
