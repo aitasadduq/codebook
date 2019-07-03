@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+@include('partials.success')
 <div class="text-center"><h1>View {{ $category->title }} Codes</h1></div>
 <br>
 <div class="row">

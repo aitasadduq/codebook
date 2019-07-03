@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+@include('partials.success')
 	<div class="container text-center col-md-4">
 		<h1>View Categories</h1>
 		<br>

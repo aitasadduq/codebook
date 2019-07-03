@@ -70,11 +70,11 @@ class CodeController extends Controller
             $code = Code::create($attributes);
             $subcategories = Subcategory::find($subs);
             $code->subcategories()->attach($subcategories);
-            return redirect('/categories/'.strval($category->id).'/codes');
+            return redirect('/categories/'.strval($category->id).'/codes')->with('success', 'New Code Added!');
         }
         $code = Code::find($parent_id);
         $code->addChildCode($attributes);
-        return back();
+        return back()->with('success', 'New Child Code Added!');
     }
 
     /**
@@ -115,6 +115,8 @@ class CodeController extends Controller
         $attributes = $this->validateCode();
         $attributes['category_id'] = $category->id;
         $parent_id = request()->get('code_id');
+        $path = '/categories/'.strval($category->id).'/codes/';
+        $message = 'Code Updated!';
         if ($parent_id == 0)
         {
             $subs = array();
@@ -129,10 +131,15 @@ class CodeController extends Controller
             $code->update($attributes);
             $subcategories = Subcategory::find($subs);
             $code->subcategories()->sync($subcategories);
-            return redirect('/categories/'.strval($category->id).'/codes/'.strval($code->id));
+            $path = $path.strval($code->id);
         }
-        $code->update($attributes);
-        return redirect('/categories/'.strval($category->id).'/codes/'.strval($parent_id));
+        else
+        {
+            $code->update($attributes);
+            $path = $path.strval($parent_id);
+            $message = 'Child '.$message;
+        }
+        return redirect($path)->with('success', $message);
     }
 
     /**
@@ -144,6 +151,7 @@ class CodeController extends Controller
     public function destroy(Category $category, Code $code)
     {
         $path = '/categories/'.strval($category->id).'/codes/';
+        $message = 'Code Deleted!';
         $parent_id = $code->code_id;
         if ($parent_id == 0)
         {
@@ -151,9 +159,10 @@ class CodeController extends Controller
         }
         else {
             $path = $path.strval($parent_id);
+            $message = 'Child '.$message;
         }
         $code->delete();
-        return redirect($path);
+        return redirect($path)->with('success', $message);
     }
 
     public function validateCode ()

@@ -18,7 +18,7 @@ class SubcategoryController extends Controller
     {
         $attributes = $this->validateSubcategory();
         $category->addSubcategory($attributes);
-        return back();
+        return back()->with('success', 'New Subcategory Added!');
     }
 
     public function edit (Category $category, Subcategory $subcategory)
@@ -37,7 +37,7 @@ class SubcategoryController extends Controller
     {
         $attributes = $this->validateSubcategory();
         $subcategory->update($attributes);
-        return redirect('/categories/'.strval($category->id));
+        return redirect('/categories/'.strval($category->id))->with('success', 'Subcategory Updated!');
     }
 
     /**
@@ -49,7 +49,7 @@ class SubcategoryController extends Controller
     public function destroy(Category $category, Subcategory $subcategory)
     {
         $subcategory->delete();
-        return redirect('/categories/'.strval($category->id));
+        return redirect('/categories/'.strval($category->id))->with('success', 'Subcategory Deleted!');
     }
 
     public function validateSubcategory ()

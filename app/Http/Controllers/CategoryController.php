@@ -38,7 +38,7 @@ class CategoryController extends Controller
     {
         $attributes = $this->validateCategory();
         $category = Category::create($attributes);
-        return redirect('/categories');
+        return redirect('/categories')->with('success', 'New Category Added!');
     }
 
     /**
@@ -74,7 +74,7 @@ class CategoryController extends Controller
     {
         $attributes = $this->validateCategory();
         $category->update($attributes);
-        return redirect('/categories/'.strval($category->id));
+        return redirect('/categories/'.strval($category->id))->with('success', 'Category Updated!');
     }
 
     /**
@@ -86,7 +86,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        return redirect('/categories');
+        return redirect('/categories')->with('success', 'Category Deleted!');
     }
 
     public function validateCategory ()
