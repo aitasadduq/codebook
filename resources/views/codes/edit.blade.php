@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+@include('partials.errors')
 <?php $parent = $code->code_id == 0 ?>
 <?php $text = $parent ? "Code" : "Child Code" ?>
 <div class="card text-center">

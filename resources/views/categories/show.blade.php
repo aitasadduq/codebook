@@ -1,5 +1,6 @@
 @extends('layouts/app')
 @section('content')
+@include('partials.errors')
 	<div class="container text-center">
 		<h1>{{ $category->title }}</h1>
 		<br>
