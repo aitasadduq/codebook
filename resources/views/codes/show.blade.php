@@ -18,13 +18,12 @@
 			</div>
 		</div>
 	</div>
-	{{-- <h2 class="card-header">{{ $code->title }}</h2> --}}
 	<div class="card-body">
 		<h5>{{ $code->details }}</h5>
-		<hr>
-		{{-- <div class="card"> --}}
-			{{-- <div class="card-body"> --}}<p>{{ $code->code }}</p>{{-- </div> --}}
-		{{-- </div> --}}
+		<br>
+		<textarea style="height: 200px" data-readonly="true" data-editor="php" class="form-control" name="code">{{ $code->code }}</textarea>
+		<br>
+		<br>
 		@foreach($code->childCodes as $child)
 		<div class="row">
 			<div class="col-md-1"></div>
@@ -42,11 +41,11 @@
 							</div>
 						</div>
 					</div>
-					{{-- <h2 class="card-header">{{ $child->title }}</h2> --}}
 					<div class="card-body">
 						<h5>{{ $child->details }}</h5>
-						<hr>
-						<p>{{ $child->code }}</p>
+						<br>
+						<textarea style="height: 200px" data-readonly="true" data-editor="php" class="form-control" name="code">{{ $child->code }}</textarea>
+						<br>
 						<div class="text-center">
 							<a class="btn btn-primary" href="/categories/{{ $category->id }}/codes/{{ $child->id }}/edit">Edit Child Code</a>
 						</div>
@@ -61,6 +60,7 @@
 		<div class="row">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
+				@include('partials.errors')
 				<div class="card">
 					<div class="card-body">
 						<h3 class="card-title">Add Child Code</h3>
@@ -71,7 +71,7 @@
 							<br>
 							<textarea class="form-control" name="details" placeholder="Details"></textarea>
 							<br>
-							<textarea class="form-control" name="code" placeholder="Code"></textarea>
+							<textarea style="height: 200px" data-readonly="false" data-editor="php" class="form-control" name="code" placeholder="Code"></textarea>
 							<br>
 							<div class="text-center">
 								<input class="btn btn-primary" type="submit" name="submit" value="Add Child Code">
@@ -89,4 +89,46 @@
 	<a class="btn btn-primary" href="/categories/{{ $category->id }}/codes/{{ $code->id }}/edit">Edit Code</a>
 	<a class="btn btn-primary" href="/categories/{{ $category->id }}/codes">View All Codes</a>
 </div>
+
+<script src="/ace-builds-master/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="/ace-builds-master/src-noconflict/theme-monokai.js" type="text/javascript" charset="utf-8"></script>
+<script src="/ace-builds-master/src-noconflict/mode-javascript.js" type="text/javascript" charset="utf-8"></script>
+<script>
+	$(function() {
+		$('textarea[data-editor]').each(function() {
+		    var textarea = $(this);
+		    var mode = textarea.data('editor');
+		    var editDiv = $('<div>', {
+		    	position: 'absolute',
+		    	width: textarea.width(),
+		    	height: textarea.height(),
+		    	'class': textarea.attr('class')
+		    }).insertBefore(textarea);
+		    textarea.css('display', 'none');
+		    var editor = ace.edit(editDiv[0]);
+		    editor.renderer.setShowGutter(textarea.data('gutter'));
+		    editor.getSession().setValue(textarea.val());
+		    editor.getSession().setMode("ace/mode/" + mode);
+		    editor.setTheme("ace/theme/dawn");
+		    editor.setOptions({
+				showGutter: true,
+				vScrollBarAlwaysVisible: true,
+				showPrintMargin: true,
+				minLines: 5,
+				highlightGutterLine: true,
+				highlightActiveLine: true,
+				autoScrollEditorIntoView: true,
+				readOnly: textarea.data('readonly'),
+				selectionStyle: "line"
+			});
+			editor.resize();
+
+		    // copy back to textarea on form submit...
+		    textarea.closest('form').submit(function() {
+				textarea.val(editor.getSession().getValue());
+		    });
+		});
+	});
+</script>
 @endsection
