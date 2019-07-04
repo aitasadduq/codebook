@@ -36,18 +36,9 @@ class CategoryController extends Controller
      */
     public function store()
     {
-        $attributes = request()->validate([
-            'title' => 'required | min:1'
-        ]);
-        $parent_id = request()->get('category_id');
-        if ($parent_id == 0)
-        {
-            $category = Category::create($attributes);
-            return redirect('/categories');
-        }
-        $category = Category::find($parent_id);
-        $category->addSubcategory($attributes);
-        return back();
+        $attributes = $this->validateCategory();
+        $category = Category::create($attributes);
+        return redirect('/categories')->with('success', 'New Category Added!');
     }
 
     /**
@@ -58,11 +49,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        if ($category->parent_id == 0)
-        {
-            return view('categories.show', compact('category'));
-        }
-        return redirect('categories');
+        return view('categories.show', compact('category'));
     }
 
     /**
@@ -85,15 +72,9 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        $attributes = request()->validate([
-            'title' => 'required | min:1'
-        ]);
+        $attributes = $this->validateCategory();
         $category->update($attributes);
-        if ($category->category_id == 0)
-        {
-            return redirect('/categories');
-        }
-        return redirect('/categories/'.(string) $category->category_id);
+        return redirect('/categories/'.strval($category->id))->with('success', 'Category Updated!');
     }
 
     /**
@@ -105,10 +86,14 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        if ($category->category_id == 0)
-        {
-            return redirect('/categories');
-        }
-        return redirect('/categories/'.(string) $category->category_id);
+        return redirect('/categories')->with('success', 'Category Deleted!');
+    }
+
+    public function validateCategory ()
+    {
+        return request()->validate([
+            'title' => 'required | min:1',
+            'description' => 'required | min:3'
+        ]);
     }
 }

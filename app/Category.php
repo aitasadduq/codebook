@@ -10,21 +10,16 @@ class Category extends Model
     //
     public function subCategories ()
     {
-    	return $this->hasMany(Category::class);
+    	return $this->hasMany(Subcategory::class);
     }
 
-    public function addSubCategory ($attributes)
+    public function addSubcategory ($attributes)
     {
         return $this->subCategories()->create($attributes);
     }
 
-    public function parent ()
-    {
-    	return $this->belongsTo(Category::class);
-    }
-
     public function codes ()
     {
-        return $this->belongsToMany(Code::class);
+        return $this->hasMany(Code::class);
     }
 }

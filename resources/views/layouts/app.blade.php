@@ -18,6 +18,15 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style type="text/css" media="screen">
+        #editor {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -35,10 +44,10 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="/categories">Categories</a>
+                            <a class="nav-link" href="/">Codes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/codes">Codes</a>
+                            <a class="nav-link" href="/categories">Manage Categories</a>
                         </li>
                     </ul>
 

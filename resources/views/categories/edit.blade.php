@@ -1,25 +1,34 @@
 @extends('layouts.app')
 @section('content')
-<div class="card">
-	<div class="card-header">
-		<?php $text = ($category->category_id == 0) ? "Category" : "Sub-category" ?>
-		<h1>Edit {{ $text }}</h1>
+<div class=row>
+	<div class="col-md-2"></div>
+	<div class="col-md-8">
+	@include('partials.errors')
+		<div class="card text-center">
+			<div class="card-body">
+				<h1 class="card-title">Edit Category</h1>
+				<form method="POST" action="/categories/{{ $category->id }}">
+					@csrf
+					@method('PATCH')
+					<div class="form-group text-left">
+						<label for="title">Title</label>
+						<input type="text" id="title" name="title" class="form-control" value="{{ $category->title }}">
+					</div>
+					<div class="form-group text-left">
+						<label for="description">Description</label>
+						<textarea id="description" name="description" class="form-control">{{ $category->description }}</textarea>
+					</div>
+					<input class="btn btn-primary" type="submit" name="submit" value="Edit Category">
+				</form>
+				<br>
+				<form method="POST" action="/categories/{{ $category->id }}">
+					@csrf
+					@method('DELETE')
+					<input class="btn btn-danger" type="submit" name="submit" value="Delete Category">
+				</form>
+			</div>
+		</div>
 	</div>
-	<div class="card-body">
-		<form method="POST" action="/categories/{{ $category->id }}">
-			@csrf
-			@method('PATCH')
-			<input type="hidden" name="category_id" value="{{ $category->category_id }}">
-			<input type="text" name="title" class="form-control" placeholder="Title" value="{{ $category->title }}">
-			<br>
-			<input class="btn btn-primary" type="submit" name="submit" value="Edit {{ $text }}">
-		</form>
-		<br>
-		<form method="POST" action="/categories/{{ $category->id }}">
-			@csrf
-			@method('DELETE')
-			<input class="btn btn-danger" type="submit" name="submit" value="Delete {{ $text }}">
-		</form>
-	</div>
+	<div class="col-md-2"></div>
 </div>
 @endsection
