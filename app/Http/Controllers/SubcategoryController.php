@@ -33,11 +33,11 @@ class SubcategoryController extends Controller
      * @param  \App\Subcategory  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Category $category, Subcategory $subcategory)
+    public function update(Subcategory $subcategory)
     {
         $attributes = $this->validateSubcategory();
         $subcategory->update($attributes);
-        return redirect('/categories/'.strval($category->id))->with('success', 'Subcategory Updated!');
+        return redirect('/categories/'.strval($subcategory->category_id))->with('success', 'Subcategory Updated!');
     }
 
     /**
@@ -46,10 +46,10 @@ class SubcategoryController extends Controller
      * @param  \App\Subcategory  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category, Subcategory $subcategory)
+    public function destroy(Subcategory $subcategory)
     {
         $subcategory->delete();
-        return redirect('/categories/'.strval($category->id))->with('success', 'Subcategory Deleted!');
+        return redirect('/categories/'.strval($subcategory->category_id))->with('success', 'Subcategory Deleted!');
     }
 
     public function validateSubcategory ()

@@ -1,7 +1,11 @@
 @extends('layouts.app')
 @section('content')
 @include('partials.success')
-<div class="text-center"><h1>View {{ $category->title }} Codes</h1></div>
+<div class="row">
+	<div class="col-md-2"><a class="btn btn-primary" href="/">< Code Categories</a></div>
+	<div class="text-center col-md-8"><h1>View {{ $category->title }} Codes</h1></div>
+	<div class="col-md-2 text-right"><a class="btn btn-primary" href="/categories/{{ $category->id }}/codes/create">Add New Code</a></div>
+</div>
 <br>
 <div class="row">
 	<div class="col-md-3">
@@ -33,7 +37,7 @@
 			@if($code->code_id == 0)
 				<div class="card">
 					<div class="card-body">
-						<h3><a class="card-title" href="/categories/{{ $category->id }}/codes/{{ $code->id }}">{{ $code->title }}</a></h3>
+						<h3><a class="card-title" href="/codes/{{ $code->id }}">{{ $code->title }}</a></h3>
 						<p class="card-text">{{ $code->details }}</p>
 						<div class="text-right">
 							@foreach($code->subcategories as $sub)
