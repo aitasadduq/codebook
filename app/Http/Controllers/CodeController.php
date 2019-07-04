@@ -101,14 +101,9 @@ class CodeController extends Controller
      */
     public function destroy(Code $code)
     {
-        $parent_id = $code->code_id;
-        if ($parent_id == 0)
-        {
-            $code->childCodes()->delete();
-        }
         $cat_id = $code->category->id;
         $code->delete();
-        return redirect($parent_id > 0 ? 'codes/'.strval($parent_id) : '/categories/'.strval($cat_id).'/codes/')->with('success', 'Code Deleted!');
+        return redirect($this->deleteLink($code, $cat_id))->with('success', 'Code Deleted!');
     }
 
     public function validateCode ()
@@ -175,6 +170,18 @@ class CodeController extends Controller
         {
             $code = Code::find($parent_id);
             $code->addChildCode($attributes);
+        }
+    }
+
+    public function deleteLink ($code, $cat_id)
+    {
+        if ($code->code_id > 0)
+        {
+            return '/codes/'.strval($code->code_id);
+        }
+        elseif ($code->code_id == 0)
+        {
+            return '/categories/'.strval($cat_id).'/codes';
         }
     }
 }
