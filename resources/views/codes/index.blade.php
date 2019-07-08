@@ -3,7 +3,7 @@
 @include('partials.success')
 <div class="row">
 	<div class="col-md-2"><a class="btn btn-primary" href="/">< Code Categories</a></div>
-	<div class="text-center col-md-8"><h1>View {{ $category->title }} Codes</h1></div>
+	<div class="text-center col-md-8"><h1>{{ $category->title }} Codes</h1></div>
 	<div class="col-md-2 text-right"><a class="btn btn-primary" href="/categories/{{ $category->id }}/codes/create">Add New Code</a></div>
 </div>
 <br>
@@ -54,5 +54,5 @@
 	</div>
 </div>
 <br>
-<div class="text-center"><a class="btn btn-primary" href="/categories/{{ $category->id }}/codes/create">Add New Code</a> <a class="btn btn-primary" href="/">View Code Categories</a></div>
+<div class="text-center"><a class="btn btn-primary" href="/categories/{{ $category->id }}/codes/create">Add New Code</a> <a class="btn btn-primary" href="/">Code Categories</a></div>
 @endsection
