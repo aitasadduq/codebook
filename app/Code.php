@@ -23,15 +23,16 @@ class Code extends Model
     	return $this->belongsTo(Code::class);
     }
 
-    public function addChildCode ($attributes)
+    public function addChildCode ($code)
     {
-    	return $this->childCodes()->create($attributes);
+    	return $this->childCodes()->save($code);
     }
 
     public function subcategories ()
     {
         return $this->belongsToMany(Subcategory::class);
     }
+
     public function attachSubcategories ($code, $create = false)
     {
         $subs = array();
@@ -61,10 +62,17 @@ class Code extends Model
             $code->childCodes()->delete();
         });
 
-        static::updating(function($code) {
+        static::updated(function($code) {
             if ($code->code_id == 0)
             {
-                $this->attachSubcategories($code);
+                $code->attachSubcategories($code);
+            }
+        });
+
+        static::created(function($code) {
+            if ($code->code_id == 0)
+            {
+                $code->attachSubcategories($code, true);
             }
         });
     }

@@ -6,6 +6,7 @@ use App\Code;
 use App\Category;
 use App\Subcategory;
 use Illuminate\Http\Request;
+use App\Http\Requests\CodeRequest;
 
 class CodeController extends Controller
 {
@@ -36,13 +37,16 @@ class CodeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Category $category)
+    public function store(CodeRequest $request, Category $category)
     {
-        $parent_id = request()->get('code_id');
-        $this->storeCode($parent_id, $category->id);
-        return redirect(
-            $parent_id > 0 ? '/codes/'.strval($parent_id) : '/categories/'.strval($category->id).'/codes')
-        ->with('success', 'New Code Added!');
+        $attributes = $request->validated();
+        $attributes['category_id'] = $category->id;
+        $code = Code::create($attributes);
+        if ($request->get('code_id') > 0)
+        {
+            Code::find($request->get('code_id'))->addChildCode($code);
+        }
+        return redirect($this->storeLink($request->get('code_id'), $category->id))->with('success', 'New Code Added!');
     }
 
     /**
@@ -81,16 +85,11 @@ class CodeController extends Controller
      * @param  \App\Code  $code
      * @return \Illuminate\Http\Response
      */
-    public function update(Code $code)
+    public function update(CodeRequest $request ,Code $code)
     {
-        $attributes = $this->validateCode();
-        $parent_id = request()->get('code_id');
+        $attributes = $request->validated();
         $code->update($attributes);
-        if ($parent_id == 0)
-        {
-            $this->attachSubcategories($code);
-        }
-        return redirect($parent_id > 0 ? '/codes/'.strval($parent_id) : '/codes/'.strval($code->id))->with('success', 'Code Updated!');
+        return redirect($this->updateLink($request->get('code_id'), $code))->with('success', 'Code Updated!');
     }
 
     /**
@@ -104,36 +103,6 @@ class CodeController extends Controller
         $cat_id = $code->category->id;
         $code->delete();
         return redirect($this->deleteLink($code, $cat_id))->with('success', 'Code Deleted!');
-    }
-
-    public function validateCode ()
-    {
-        return request()->validate([
-            'title' => 'required|min:3',
-            'details' => 'required|min:3',
-            'code' => 'required|min:3'
-        ]);
-    }
-
-    public function attachSubcategories ($code, $create = false)
-    {
-        $subs = array();
-        foreach ($code->category->subCategories as $sub)
-        {
-            if (request()->has($sub->id))
-            {
-                $subs[] = $sub->id;
-            }
-        }
-        $subcategories = Subcategory::find($subs);
-        if ($create)
-        {
-            $code->subcategories()->attach($subcategories);
-        }
-        else
-        {
-            $code->subcategories()->sync($subcategories);
-        }
     }
 
     public function getCodes ($category)
@@ -157,31 +126,21 @@ class CodeController extends Controller
         return $codes;
     }
 
-    public function storeCode ($parent_id, $category_id)
-    {
-        $attributes = $this->validateCode();
-        $attributes['category_id'] = $category_id;
-        if ($parent_id == 0)
-        {
-            $code = Code::create($attributes);
-            $this->attachSubcategories($code, true);
-        }
-        elseif ($parent_id > 0)
-        {
-            $code = Code::find($parent_id);
-            $code->addChildCode($attributes);
-        }
-    }
-
     public function deleteLink ($code, $cat_id)
     {
-        if ($code->code_id > 0)
-        {
-            return '/codes/'.strval($code->code_id);
-        }
-        elseif ($code->code_id == 0)
-        {
-            return '/categories/'.strval($cat_id).'/codes';
-        }
+        if ($code->code_id > 0) { return '/codes/'.strval($code->code_id); }
+        elseif ($code->code_id == 0) { return '/categories/'.strval($cat_id).'/codes'; }
+    }
+
+    public function storeLink ($parent_id, $cat_id)
+    {
+        if ($parent_id > 0) { return '/codes/'.strval($parent_id); }
+        elseif ($parent_id == 0) { return '/categories/'.strval($cat_id).'/codes'; }
+    }
+
+    public function updateLink ($parent_id, $code)
+    {
+        if ($parent_id > 0) { return '/codes/'.strval($parent_id); }
+        elseif ($parent_id == 0) { return '/codes/'.strval($code->id); }
     }
 }
