@@ -7,6 +7,7 @@ use App\Category;
 use App\Subcategory;
 use Illuminate\Http\Request;
 use App\Http\Requests\CodeRequest;
+use Illuminate\Support\Facades\Input;
 
 class CodeController extends Controller
 {
@@ -17,7 +18,14 @@ class CodeController extends Controller
      */
     public function index(Category $category)
     {
-        $codes = $this->getCodes($category);
+        $codes = $category->codes()->where('code_id', 0);
+        if (request()->get('is_filter') == "1")
+        {
+            $codes = $codes->whereHas('subcategories', function($query) {
+                $query->whereIn('subcategories.id', request()->get('checkboxes'));
+            });
+        }
+        $codes = $codes->get();
         return view('codes.index', compact('category', 'codes'));
     }
 
@@ -103,27 +111,6 @@ class CodeController extends Controller
         $cat_id = $code->category->id;
         $code->delete();
         return redirect($this->deleteLink($code, $cat_id))->with('success', 'Code Deleted!');
-    }
-
-    public function getCodes ($category)
-    {
-        $codes = collect([]);
-        if (request()->get('is_filter') === "1")
-        {
-            foreach($category->subCategories as $sub)
-            {
-                if (request()->has($sub->id))
-                {
-                    $codes = $codes->toBase()->merge($sub->codes);
-                }
-            }
-            $codes = $codes->unique('id');
-        }
-        else
-        {
-            $codes = $category->codes;
-        }
-        return $codes;
     }
 
     public function deleteLink ($code, $cat_id)

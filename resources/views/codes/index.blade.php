@@ -20,7 +20,7 @@
 						@foreach($category->subCategories as $sub)
 						<li class="list-group-item">
 							<div class="form-check">
-								<input class="form-check-input" type="checkbox" name="{{ $sub->id }}" id="{{ $sub->id }}">
+								<input class="form-check-input" type="checkbox" name="checkboxes[]" value="{{ $sub->id }}" id="{{ $sub->id }}">
 								<label class="form-check-label" for="{{ $sub->id }}">{{ $sub->title }}</label>
 							</div>
 						</li>
