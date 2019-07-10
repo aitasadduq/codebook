@@ -2,10 +2,9 @@
 @section('content')
 @include('partials.errors')
 <?php $parent = $code->code_id == 0 ?>
-<?php $text = $parent ? "Code" : "Child Code" ?>
 <div class="card text-center">
 	<div class="card-body">
-		<h1 class="card-title">Edit {{ $text }}</h1>
+		<h1 class="card-title">Edit Code</h1>
 		<form method="POST" action="/codes/{{ $code->id }}">
 			@csrf
 			@method('PATCH')
@@ -47,13 +46,13 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<input class="btn btn-primary" type="submit" name="submit" value="Edit {{ $text }}">
+				<input class="btn btn-primary" type="submit" name="submit" value="Edit Code">
 			</div>
 		</form>
 		<form method="POST" action="/codes/{{ $code->id }}">
 			@csrf
 			@method('DELETE')
-			<input class="btn btn-danger" type="submit" name="submit" value="Delete {{ $text }}">
+			<input class="btn btn-danger" type="submit" name="submit" value="Delete Code">
 		</form>
 	</div>
 </div>
