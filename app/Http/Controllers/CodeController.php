@@ -17,7 +17,14 @@ class CodeController extends Controller
      */
     public function index(Category $category)
     {
-        $codes = $this->getCodes($category);
+        $codes = $category->codes()->where('code_id', 0);
+        if (request()->get('is_filter') == "1")
+        {
+            $codes = $codes->whereHas('subcategories', function($query) {
+                $query->whereIn('subcategories.id', request()->get('checkboxes'));
+            });
+        }
+        $codes = $codes->get();
         return view('codes.index', compact('category', 'codes'));
     }
 
@@ -45,8 +52,9 @@ class CodeController extends Controller
         if ($request->get('code_id') > 0)
         {
             Code::find($request->get('code_id'))->addChildCode($code);
+            return redirect('/codes/'.strval($request->get('code_id')))->with('success', 'New Code Added!');
         }
-        return redirect($this->storeLink($request->get('code_id'), $category->id))->with('success', 'New Code Added!');
+        elseif ($request->get('code_id') == 0) { return redirect('/categories/'.strval($category->id).'/codes')->with('success', 'New Code Added!'); }
     }
 
     /**
@@ -89,7 +97,8 @@ class CodeController extends Controller
     {
         $attributes = $request->validated();
         $code->update($attributes);
-        return redirect($this->updateLink($request->get('code_id'), $code))->with('success', 'Code Updated!');
+        if ($request->get('code_id') > 0) { return redirect('/codes/'.strval($code->code_id))->with('success', 'Code Updated!'); }
+        elseif ($request->get('code_id') == 0) { return redirect('/codes/'.strval($code->id))->with('success', 'Code Updated!'); }
     }
 
     /**
@@ -100,47 +109,8 @@ class CodeController extends Controller
      */
     public function destroy(Code $code)
     {
-        $cat_id = $code->category->id;
         $code->delete();
-        return redirect($this->deleteLink($code, $cat_id))->with('success', 'Code Deleted!');
-    }
-
-    public function getCodes ($category)
-    {
-        $codes = collect([]);
-        if (request()->get('is_filter') === "1")
-        {
-            foreach($category->subCategories as $sub)
-            {
-                if (request()->has($sub->id))
-                {
-                    $codes = $codes->toBase()->merge($sub->codes);
-                }
-            }
-            $codes = $codes->unique('id');
-        }
-        else
-        {
-            $codes = $category->codes;
-        }
-        return $codes;
-    }
-
-    public function deleteLink ($code, $cat_id)
-    {
-        if ($code->code_id > 0) { return '/codes/'.strval($code->code_id); }
-        elseif ($code->code_id == 0) { return '/categories/'.strval($cat_id).'/codes'; }
-    }
-
-    public function storeLink ($parent_id, $cat_id)
-    {
-        if ($parent_id > 0) { return '/codes/'.strval($parent_id); }
-        elseif ($parent_id == 0) { return '/categories/'.strval($cat_id).'/codes'; }
-    }
-
-    public function updateLink ($parent_id, $code)
-    {
-        if ($parent_id > 0) { return '/codes/'.strval($parent_id); }
-        elseif ($parent_id == 0) { return '/codes/'.strval($code->id); }
+        if ($code->code_id > 0) { return redirect('/codes/'.strval($code->code_id))->with('success', 'Code Deleted!'); }
+        elseif ($code->code_id == 0) { return redirect('/categories/'.strval($code->category->id).'/codes')->with('success', 'Code Deleted!'); }
     }
 }
