@@ -8,12 +8,12 @@ class Subcategory extends Model
 {
     protected $guarded = [];
 
-    public function parent ()
+    public function category()
     {
     	return $this->belongsTo(Category::class);
     }
 
-    public function codes ()
+    public function codes()
     {
     	return $this->belongsToMany(Code::class);
     }

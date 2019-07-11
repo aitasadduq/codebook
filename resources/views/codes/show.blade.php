@@ -7,7 +7,7 @@
 		<form method="GET" action="/categories/{{ $code->category->id }}/codes">
 			@csrf
 			<input type="hidden" name="is_filter" value="0">
-			<input class="btn btn-primary" type="submit" name="submit" value="< View All Codes">
+			<input class="btn btn-primary" type="submit" name="submit" value="< All Codes">
 		</form>
 		<br>
 	</div>
@@ -103,7 +103,7 @@
 	<form method="GET" action="/categories/{{ $code->category->id }}/codes">
 		@csrf
 		<input type="hidden" name="is_filter" value="0">
-		<input class="btn btn-primary" type="submit" name="submit" value="View All Codes">
+		<input class="btn btn-primary" type="submit" name="submit" value="All Codes">
 	</form>
 </div>
 @include('partials.editor')

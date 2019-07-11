@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Subcategory;
 use Illuminate\Http\Request;
+use App\Http\Requests\SubcategoryRequest;
 
 class SubcategoryController extends Controller
 {
@@ -14,14 +15,14 @@ class SubcategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Category $category)
+    public function store(SubcategoryRequest $request, Category $category)
     {
-        $attributes = $this->validateSubcategory();
+        $attributes = $request->validated();
         $category->addSubcategory($attributes);
         return back()->with('success', 'New Subcategory Added!');
     }
 
-    public function edit (Category $category, Subcategory $subcategory)
+    public function edit(Category $category, Subcategory $subcategory)
     {
         return view('subcategories.edit', compact('category', 'subcategory'));
     }
@@ -33,9 +34,9 @@ class SubcategoryController extends Controller
      * @param  \App\Subcategory  $subcategory
      * @return \Illuminate\Http\Response
      */
-    public function update(Subcategory $subcategory)
+    public function update(SubcategoryRequest $request, Subcategory $subcategory)
     {
-        $attributes = $this->validateSubcategory();
+        $attributes = $request->validated();
         $subcategory->update($attributes);
         return redirect('/categories/'.strval($subcategory->category_id))->with('success', 'Subcategory Updated!');
     }
@@ -50,12 +51,5 @@ class SubcategoryController extends Controller
     {
         $subcategory->delete();
         return redirect('/categories/'.strval($subcategory->category_id))->with('success', 'Subcategory Deleted!');
-    }
-
-    public function validateSubcategory ()
-    {
-        return request()->validate([
-            'title' => 'required | min:3'
-        ]);
     }
 }
