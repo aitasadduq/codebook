@@ -60,5 +60,5 @@
 	</div>
 </div>
 <br>
-<div class="text-center"><a class="btn btn-primary" href="/categories/{{ $category->id }}/codes/create">Add New Code</a> <a class="btn btn-primary" href="/">Code Categories</a></div>
+<div class="text-center"><a class="btn btn-primary" href="/">Code Categories</a> <a class="btn btn-primary" href="/categories/{{ $category->id }}/codes/create">Add New Code</a></div>
 @endsection
