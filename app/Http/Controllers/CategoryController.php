@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
+use App\Http\Requests\CategoryRequest;
 
 class CategoryController extends Controller
 {
@@ -34,9 +35,9 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(CategoryRequest $request)
     {
-        $attributes = $this->validateCategory();
+        $attributes = $request->validated();
         $category = Category::create($attributes);
         return redirect('/categories')->with('success', 'New Category Added!');
     }
@@ -70,9 +71,9 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryRequest $request, Category $category)
     {
-        $attributes = $this->validateCategory();
+        $attributes = $request->validated();
         $category->update($attributes);
         return redirect('/categories/'.strval($category->id))->with('success', 'Category Updated!');
     }
@@ -87,13 +88,5 @@ class CategoryController extends Controller
     {
         $category->delete();
         return redirect('/categories')->with('success', 'Category Deleted!');
-    }
-
-    public function validateCategory ()
-    {
-        return request()->validate([
-            'title' => 'required | min:1',
-            'description' => 'required | min:3'
-        ]);
     }
 }

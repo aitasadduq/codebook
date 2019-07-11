@@ -18,8 +18,7 @@ class CodeController extends Controller
     public function index(Category $category)
     {
         $codes = $category->codes()->where('code_id', 0);
-        if (request()->get('is_filter') == "1")
-        {
+        if (request()->get('is_filter') == "1") {
             $codes = $codes->whereHas('subcategories', function($query) {
                 $query->whereIn('subcategories.id', request()->get('checkboxes'));
             });
@@ -48,13 +47,13 @@ class CodeController extends Controller
     {
         $attributes = $request->validated();
         $attributes['category_id'] = $category->id;
-        $code = Code::create($attributes);
-        if ($request->get('code_id') > 0)
-        {
-            Code::find($request->get('code_id'))->addChildCode($code);
+        if ($request->get('code_id') > 0) {
+            Code::find($request->get('code_id'))->addChildCode($attributes);
             return redirect('/codes/'.strval($request->get('code_id')))->with('success', 'New Code Added!');
+        } elseif ($request->get('code_id') == 0) {
+            $code = Code::create($attributes);
+            return redirect('/categories/'.strval($category->id).'/codes')->with('success', 'New Code Added!');
         }
-        elseif ($request->get('code_id') == 0) { return redirect('/categories/'.strval($category->id).'/codes')->with('success', 'New Code Added!'); }
     }
 
     /**
@@ -65,12 +64,9 @@ class CodeController extends Controller
      */
     public function show(Code $code)
     {
-        if ($code->code_id == 0)
-        {
+        if ($code->code_id == 0) {
             return view('codes.show', compact('code'));
-        }
-        elseif ($code->code_id > 0)
-        {
+        } elseif ($code->code_id > 0) {
             return redirect('/codes/'.strval($code->code_id));
         }
     }
@@ -97,8 +93,11 @@ class CodeController extends Controller
     {
         $attributes = $request->validated();
         $code->update($attributes);
-        if ($request->get('code_id') > 0) { return redirect('/codes/'.strval($code->code_id))->with('success', 'Code Updated!'); }
-        elseif ($request->get('code_id') == 0) { return redirect('/codes/'.strval($code->id))->with('success', 'Code Updated!'); }
+        if ($request->get('code_id') > 0) {
+            return redirect('/codes/'.strval($code->code_id))->with('success', 'Code Updated!');
+        } elseif ($request->get('code_id') == 0) {
+            return redirect('/codes/'.strval($code->id))->with('success', 'Code Updated!');
+        }
     }
 
     /**
@@ -110,7 +109,10 @@ class CodeController extends Controller
     public function destroy(Code $code)
     {
         $code->delete();
-        if ($code->code_id > 0) { return redirect('/codes/'.strval($code->code_id))->with('success', 'Code Deleted!'); }
-        elseif ($code->code_id == 0) { return redirect('/categories/'.strval($code->category->id).'/codes')->with('success', 'Code Deleted!'); }
+        if ($code->code_id > 0) {
+            return redirect('/codes/'.strval($code->code_id))->with('success', 'Code Deleted!');
+        } elseif ($code->code_id == 0) {
+            return redirect('/categories/'.strval($code->category->id).'/codes')->with('success', 'Code Deleted!');
+        }
     }
 }

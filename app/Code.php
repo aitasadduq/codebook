@@ -8,32 +8,32 @@ class Code extends Model
 {
     protected $guarded = [];
 
-    public function category ()
+    public function category()
     {
     	return $this->belongsTo(Category::class);
     }
 
-    public function childCodes ()
+    public function childCodes()
     {
     	return $this->hasMany(Code::class);
     }
 
-    public function parentCode ()
+    public function parentCode()
     {
     	return $this->belongsTo(Code::class);
     }
 
-    public function addChildCode ($code)
+    public function addChildCode($attributes)
     {
-    	return $this->childCodes()->save($code);
+    	return $this->childCodes()->create($attributes);
     }
 
-    public function subcategories ()
+    public function subcategories()
     {
         return $this->belongsToMany(Subcategory::class);
     }
 
-    public function attachSubcategories ($code, $create = false)
+    public function attachSubcategories($code, $create = false)
     {
         $subs = array();
         foreach ($code->category->subCategories as $sub)
@@ -54,7 +54,7 @@ class Code extends Model
         }
     }
 
-    protected static function boot ()
+    protected static function boot()
     {
         parent::boot();
 
@@ -63,15 +63,13 @@ class Code extends Model
         });
 
         static::updated(function($code) {
-            if ($code->code_id == 0)
-            {
+            if ($code->code_id == 0) {
                 $code->attachSubcategories($code);
             }
         });
 
         static::created(function($code) {
-            if ($code->code_id == 0)
-            {
+            if ($code->code_id == 0) {
                 $code->attachSubcategories($code, true);
             }
         });
