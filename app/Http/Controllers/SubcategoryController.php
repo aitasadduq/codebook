@@ -21,7 +21,7 @@ class SubcategoryController extends Controller
         return back()->with('success', 'New Subcategory Added!');
     }
 
-    public function edit (Category $category, Subcategory $subcategory)
+    public function edit(Category $category, Subcategory $subcategory)
     {
         return view('subcategories.edit', compact('category', 'subcategory'));
     }
@@ -52,7 +52,7 @@ class SubcategoryController extends Controller
         return redirect('/categories/'.strval($subcategory->category_id))->with('success', 'Subcategory Deleted!');
     }
 
-    public function validateSubcategory ()
+    public function validateSubcategory()
     {
         return request()->validate([
             'title' => 'required | min:3'

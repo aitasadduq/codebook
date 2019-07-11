@@ -8,17 +8,17 @@ class Category extends Model
 {
     protected $guarded = [];
     //
-    public function subCategories ()
+    public function subCategories()
     {
     	return $this->hasMany(Subcategory::class);
     }
 
-    public function addSubcategory ($attributes)
+    public function addSubcategory($attributes)
     {
         return $this->subCategories()->create($attributes);
     }
 
-    public function codes ()
+    public function codes()
     {
         return $this->hasMany(Code::class);
     }
