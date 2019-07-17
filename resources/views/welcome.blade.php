@@ -27,5 +27,16 @@
         </div>
     @endforelse
 </div>
+<hr>
+<div id="one">
+    <h1>
+        @{{ shared.user.name }}
+    </h1>
+</div>
+<div id="two">
+    <h4>
+        @{{ shared.user.name }}
+    </h4>
+</div>
 <script src="/js/app.js"></script>
 @endsection
