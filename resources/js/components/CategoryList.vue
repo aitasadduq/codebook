@@ -6,6 +6,7 @@
             :title="category['title']"
             :description="category['description']"
             :primary-button-text="primaryButtonText"
+            :secondary-button-text="secondaryButtonText"
         ></category-details>
     </div>
 </template>
@@ -17,6 +18,7 @@
         props: {
             categories: { default: {} },
             primaryButtonText: { required: true },
+            secondaryButtonText: { required: true },
         },
         components: { CategoryDetails },
     }

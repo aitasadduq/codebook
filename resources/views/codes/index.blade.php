@@ -9,34 +9,34 @@
 <br>
 <div class="row">
 	<div class="col-md-3">
-			<div class="card">
-				<form method="GET" action="/categories/{{ $category->id }}/codes">
-					@csrf
-					<input type="hidden" name="is_filter" value="1">
-					<div class="card-body text-center">
-						<h3 class="card-title">Subcategories</h3>
-					</div>
-					<ul class="list-group list-group-flush">
-						@foreach($category->subCategories as $sub)
-						<li class="list-group-item">
-							<div class="form-check">
-								<input class="form-check-input" type="checkbox" name="checkboxes[]" value="{{ $sub->id }}" id="{{ $sub->id }}">
-								<label class="form-check-label" for="{{ $sub->id }}">{{ $sub->title }}</label>
-							</div>
-						</li>
-						@endforeach
-					</ul>
-					<div class="card-body text-center">
-						<input class="btn btn-primary" type="submit" name="submit" value="Filter">
-				</form>
-				<form method="GET" action="/categories/{{ $category->id }}/codes">
-					@csrf
-					<br>
-					<input type="hidden" name="is_filter" value="0">
-					<input class="btn btn-primary" type="submit" name="submit" value="Remove Filters">
-				</form>
-					</div>
-			</div>
+		<div class="card">
+			<form method="GET" action="/categories/{{ $category->id }}/codes">
+				@csrf
+				<input type="hidden" name="is_filter" value="1">
+				<div class="card-body text-center">
+					<h3 class="card-title">Subcategories</h3>
+				</div>
+				<ul class="list-group list-group-flush">
+					@foreach($category->subCategories as $sub)
+					<li class="list-group-item">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" name="checkboxes[]" value="{{ $sub->id }}" id="{{ $sub->id }}">
+							<label class="form-check-label" for="{{ $sub->id }}">{{ $sub->title }}</label>
+						</div>
+					</li>
+					@endforeach
+				</ul>
+				<div class="card-body text-center">
+					<input class="btn btn-primary" type="submit" name="submit" value="Filter">
+			</form>
+			<form method="GET" action="/categories/{{ $category->id }}/codes">
+				@csrf
+				<br>
+				<input type="hidden" name="is_filter" value="0">
+				<input class="btn btn-primary" type="submit" name="submit" value="Remove Filters">
+			</form>
+				</div>
+		</div>
 	</div>
 	<div class="col-md-9">
 		@foreach($codes as $code)
