@@ -13,6 +13,10 @@
                             <input type="hidden" name="is_filter" value="0">
                             <input class="btn btn-primary" type="submit" name="submit" :value="primaryButtonText">
                         </form>
+                        <br>
+                        <router-link tag="div" :to="to">
+                            <a class="btn btn-primary">{{ secondaryButtonText }}</a>
+                        </router-link>
                     </div>
                 </div>
             </div>
@@ -28,11 +32,17 @@
             description: { required: true },
             primaryButtonText: { required: true },
             primaryButtonLink: { type: String },
+            secondaryButtonText: { required: true },
+            secondaryButtonLink: { type: String },
         },
         computed: {
             link() {
                 if(!this.primaryButtonLink) return '/categories/' + this.id + '/codes';
                 return this.primaryButtonLink;
+            },
+            to() {
+                if(!this.secondaryButtonLink) return '/categorycodes/' + this.id;
+                return this.secondaryButtonLink;
             }
         },
         data() {

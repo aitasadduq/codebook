@@ -1,5 +1,6 @@
 <?php
 
+use App\Code;
 use App\Category;
 
 /*
@@ -16,7 +17,6 @@ use App\Category;
 Route::get('/', function () {
 	$categories = Category::all();
     return view('welcome', compact('categories'));
-    // return redirect('categories');
 });
 Route::get('/categories/{category}/codes', 'CodeController@index');
 Route::get('/categories/{category}/codes/create', 'CodeController@create');
@@ -30,3 +30,15 @@ Route::resource('subcategories', 'SubcategoryController')->except(['store']);
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/categorycodes/{category}', function(Category $category) {
+    return $category->codes()->where('code_id', 0)->get();
+});
+Route::get('/categorysubcategories/{category}', function(Category $category) {
+    return $category->subcategories()->get();
+});
+Route::get('/categorytitle/{category}', function(Category $category) {
+    return $category->title;
+});
+Route::get('/codesubcategories/{code}', function(Code $code) {
+    return $code->subcategories()->get();
+});
