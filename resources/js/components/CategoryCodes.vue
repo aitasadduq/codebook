@@ -75,9 +75,14 @@
             },
             getFilteredData() {
                 this.filteredCodes = this.codes;
-                if (this.search !== '') {
+                if (this.search.trim() !== '') {
+                    let res = this.search.trim().split(' ');
                     this.filteredCodes = this.filteredCodes.filter(filCode => {
-                        return filCode['title'].toLowerCase().indexOf(this.search.toLowerCase()) >= 0 || filCode['details'].toLowerCase().indexOf(this.search.toLowerCase()) >= 0;
+                        let found = false;
+                        res.forEach(obj => {
+                           found = found || filCode['title'].toLowerCase().indexOf(obj.toLowerCase()) >= 0 || filCode['details'].toLowerCase().indexOf(obj.toLowerCase()) >= 0;
+                        });
+                        return found;
                     });
                 }
             },

@@ -1785,13 +1785,16 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getFilteredData: function getFilteredData() {
-      var _this2 = this;
-
       this.filteredCodes = this.codes;
 
-      if (this.search !== '') {
+      if (this.search.trim() !== '') {
+        var res = this.search.trim().split(' ');
         this.filteredCodes = this.filteredCodes.filter(function (filCode) {
-          return filCode['title'].toLowerCase().indexOf(_this2.search.toLowerCase()) >= 0 || filCode['details'].toLowerCase().indexOf(_this2.search.toLowerCase()) >= 0;
+          var found = false;
+          res.forEach(function (obj) {
+            found = found || filCode['title'].toLowerCase().indexOf(obj.toLowerCase()) >= 0 || filCode['details'].toLowerCase().indexOf(obj.toLowerCase()) >= 0;
+          });
+          return found;
         });
       }
     }
