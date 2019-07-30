@@ -55,5 +55,10 @@
         created() {
             Category.code_subcategories(this.myCode['id'], subs => (this.subcategories = subs));
         },
+        watch: {
+            myCode (to, from) {
+                Category.code_subcategories(this.myCode['id'], subs => (this.subcategories = subs));
+            }
+        },
     }
 </script>
