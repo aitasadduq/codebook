@@ -1733,7 +1733,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1994,6 +1993,16 @@ __webpack_require__.r(__webpack_exports__);
     _models_Category_js__WEBPACK_IMPORTED_MODULE_0__["default"].code_subcategories(this.myCode['id'], function (subs) {
       return _this2.subcategories = subs;
     });
+  },
+  updated: function updated() {},
+  watch: {
+    myCode: function myCode(to, from) {
+      var _this3 = this;
+
+      _models_Category_js__WEBPACK_IMPORTED_MODULE_0__["default"].code_subcategories(this.myCode['id'], function (subs) {
+        return _this3.subcategories = subs;
+      });
+    }
   }
 });
 
