@@ -1733,6 +1733,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1742,8 +1749,10 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       codes: [],
+      filteredCodes: [],
       subcategories: [],
-      name: ''
+      name: '',
+      search: ''
     };
   },
   computed: {
@@ -1765,12 +1774,26 @@ __webpack_require__.r(__webpack_exports__);
       _models_Category_js__WEBPACK_IMPORTED_MODULE_0__["default"].codes(this.id, function (categorycodes) {
         return _this.codes = categorycodes;
       });
+      _models_Category_js__WEBPACK_IMPORTED_MODULE_0__["default"].codes(this.id, function (categorycodes) {
+        return _this.filteredCodes = categorycodes;
+      });
       _models_Category_js__WEBPACK_IMPORTED_MODULE_0__["default"].subcategories(this.id, function (categorysubs) {
         return _this.subcategories = categorysubs;
       });
       _models_Category_js__WEBPACK_IMPORTED_MODULE_0__["default"].title(this.id, function (categoryname) {
         return _this.name = categoryname;
       });
+    },
+    getFilteredData: function getFilteredData() {
+      var _this2 = this;
+
+      this.filteredCodes = this.codes;
+
+      if (this.search !== '') {
+        this.filteredCodes = this.filteredCodes.filter(function (filCode) {
+          return filCode['title'].toLowerCase().indexOf(_this2.search.toLowerCase()) >= 0 || filCode['details'].toLowerCase().indexOf(_this2.search.toLowerCase()) >= 0;
+        });
+      }
     }
   },
   created: function created() {
@@ -1994,7 +2017,6 @@ __webpack_require__.r(__webpack_exports__);
       return _this2.subcategories = subs;
     });
   },
-  updated: function updated() {},
   watch: {
     myCode: function myCode(to, from) {
       var _this3 = this;
@@ -2517,13 +2539,42 @@ var render = function() {
     _c("hr"),
     _vm._v(" "),
     _c("div", { staticClass: "text-center" }, [
-      _c("h1", [_vm._v("Latest " + _vm._s(_vm.name) + " Codes")])
+      _c("h1", [_vm._v(_vm._s(_vm.name) + " Codes")])
     ]),
     _vm._v(" "),
     _c("br"),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-3" }, [
+        _c("form", { on: { submit: _vm.getFilteredData } }, [
+          _c("div", { staticClass: "form-row" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.search,
+                  expression: "search"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Search..." },
+              domProps: { value: _vm.search },
+              on: {
+                keyup: _vm.getFilteredData,
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.search = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
         _c("div", { staticClass: "card" }, [
           _vm._m(0),
           _vm._v(" "),
@@ -2589,7 +2640,7 @@ var render = function() {
       _c(
         "div",
         { staticClass: "col-md-9" },
-        _vm._l(_vm.codes, function(mycode) {
+        _vm._l(_vm.filteredCodes, function(mycode) {
           return _c("my-code", {
             attrs: {
               "my-code": mycode,
