@@ -20,7 +20,7 @@
                 <br>
                 <div v-show="category_id != '-1'" class="card">
                     <div class="card-body text-center">
-                        <h3 class="card-title">Subcategories</h3>
+                        <h3 class="card-title">Categories</h3>
                     </div>
                     <ul class="list-group list-group-flush">
                         <li
@@ -100,7 +100,7 @@
                     this.filteredCodes = this.filteredCodes.filter(filCode => {
                         let found = false;
                         res.forEach(obj => {
-                           found = found || filCode['title'].toLowerCase().indexOf(obj.toLowerCase()) >= 0 || filCode['details'].toLowerCase().indexOf(obj.toLowerCase()) >= 0;
+                           found = found || filCode['title'].toLowerCase().indexOf(obj.toLowerCase()) >= 0 || filCode['details'].toLowerCase().indexOf(obj.toLowerCase()) >= 0 || filCode['code'].toLowerCase().indexOf(obj.toLowerCase()) >= 0;
                         });
                         return found;
                     });
