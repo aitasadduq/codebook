@@ -1740,6 +1740,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1762,7 +1763,7 @@ __webpack_require__.r(__webpack_exports__);
         return obj.checked;
       });
       checkedFilters.forEach(function (element) {
-        filters.push(element.value['id']);
+        filters.push(element.value);
       });
       return filters;
     }
@@ -1797,6 +1798,11 @@ __webpack_require__.r(__webpack_exports__);
           return found;
         });
       }
+    },
+    removeItem: function removeItem(item) {
+      this.subcategories.forEach(function (sub) {
+        if (sub.value['id'] == item) sub.checked = false;
+      });
     }
   },
   created: function created() {
@@ -2001,7 +2007,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.selectedFilters.length > 0) {
         this.selectedFilters.forEach(function (selFil) {
           _this.subcategories.forEach(function (sub) {
-            if (selFil == sub['id']) {
+            if (selFil['id'] == sub['id']) {
               truth = true;
             }
           });
@@ -2643,15 +2649,37 @@ var render = function() {
       _c(
         "div",
         { staticClass: "col-md-9" },
-        _vm._l(_vm.filteredCodes, function(mycode) {
-          return _c("my-code", {
-            attrs: {
-              "my-code": mycode,
-              "selected-filters": _vm.selectedFilters
-            }
+        [
+          _vm._l(_vm.selectedFilters, function(fil) {
+            return _c("h5", [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary btn-lg badge badge-pill",
+                  on: {
+                    click: function($event) {
+                      return _vm.removeItem(fil["id"])
+                    }
+                  }
+                },
+                [
+                  _c("i", { staticClass: "fa fa-close" }),
+                  _vm._v(" " + _vm._s(fil["title"]))
+                ]
+              )
+            ])
+          }),
+          _vm._v(" "),
+          _vm._l(_vm.filteredCodes, function(mycode) {
+            return _c("my-code", {
+              attrs: {
+                "my-code": mycode,
+                "selected-filters": _vm.selectedFilters
+              }
+            })
           })
-        }),
-        1
+        ],
+        2
       )
     ])
   ])

@@ -29,6 +29,7 @@
                 </div>
             </div>
             <div class="col-md-9">
+                <h5 v-for="fil in selectedFilters"><button class="btn btn-primary btn-lg badge badge-pill" @click="removeItem(fil['id'])"><i class="fa fa-close"></i> {{ fil['title'] }}</button></h5>
                 <my-code
                     :my-code="mycode"
                     :selected-filters="selectedFilters"
@@ -61,7 +62,7 @@
                 let filters = [];
                 let checkedFilters = this.subcategories.filter(obj => obj.checked);
                 checkedFilters.forEach(element => {
-                    filters.push(element.value['id']);
+                    filters.push(element.value);
                 });
                 return filters;
             }
@@ -85,6 +86,11 @@
                         return found;
                     });
                 }
+            },
+            removeItem(item) {
+                this.subcategories.forEach(sub => {
+                    if (sub.value['id'] == item) sub.checked = false;
+                });
             },
         },
         created() {
