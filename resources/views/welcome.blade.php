@@ -1,13 +1,13 @@
 @extends('layouts.app')
 @section('content')
-<h1 class="text-center">Code Categories</h1>
-<br>
+{{-- <h1 class="text-center">Code Categories</h1>
+<br> --}}
 <div id="one">
-    <category-list
+    {{-- <category-list
         :categories="{{ $categories->toJson() }}"
         :primary-button-text="`View All Codes`"
         :secondary-button-text="`View Latest Codes`"
-    ></category-list>
-    <router-view></router-view>
+    ></category-list> --}}
+    <category-codes :categories="{{ $categories->toJson() }}"></category-codes>
 </div>
 @endsection

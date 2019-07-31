@@ -1,4 +1,8 @@
 class Category {
+    static allCodes(then) {
+        return axios.get('/allcodes').
+            then(({data}) => then(data));
+    }
     static codes(id, then) {
         return axios.get('/categorycodes/' + id)
             .then(({data}) => then(data));

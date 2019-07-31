@@ -8,6 +8,7 @@ window.axios = axios;
 Vue.use(VueRouter);
 
 Vue.component('category-list', require('./components/CategoryList.vue').default);
+Vue.component('category-codes', require('./components/CategoryCodes.vue').default);
 
 new Vue({
     el: '#one',
