@@ -30,6 +30,9 @@ Route::resource('subcategories', 'SubcategoryController')->except(['store']);
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/allcodes', function() {
+    return Code::where('code_id', 0)->get();
+});
 Route::get('/categorycodes/{category}', function(Category $category) {
     return $category->codes()->where('code_id', 0)->get();
 });

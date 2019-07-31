@@ -41,7 +41,7 @@
                 if (this.selectedFilters.length > 0) {
                     this.selectedFilters.forEach(selFil => {
                         this.subcategories.forEach(sub => {
-                            if (selFil == sub['id']) {
+                            if (selFil['id'] == sub['id']) {
                                 truth = true;
                             }
                         });
