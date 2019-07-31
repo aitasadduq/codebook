@@ -8,3 +8,9 @@ A place to store and version your code snippets for future reusabilty and self-i
 - Ability to add code and add versions of code
 - Ability to edit and delete codes
 - Ability to edit and delete categories and subcategories
+
+## Technologies Used
+- PHP
+- Laravel
+- Vue.js
+- MySQL
