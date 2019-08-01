@@ -47,7 +47,7 @@
                             <a class="nav-link" href="/">Codes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/categories">Manage Categories</a>
+                            <a class="nav-link" href="/categories">Manage Sections</a>
                         </li>
                     </ul>
 
