@@ -2,6 +2,7 @@
 
 use App\Code;
 use App\Category;
+use App\Subcategory;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,22 +20,25 @@ Route::get('/', function () {
     return view('welcome', compact('categories'));
 });
 Route::get('/categories/{category}/codes', 'CodeController@index');
-Route::get('/categories/{category}/codes/create', 'CodeController@create');
+// Route::get('/categories/{category}/codes/create', 'CodeController@create');
 Route::post('/categories/{category}/codes', 'CodeController@store');
 Route::post('/categories/{category}/subcategories', 'SubcategoryController@store');
 
 Route::resource('categories', 'CategoryController');
-Route::resource('codes', 'CodeController')->except(['index', 'create', 'store']);
+Route::resource('codes', 'CodeController')->except(['index', 'store']);
 Route::resource('subcategories', 'SubcategoryController')->except(['store']);
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/allcodes', function() {
-    return Code::where('code_id', 0)->get();
+    return Code::where('code_id', 0)->latest()->get();
+});
+Route::get('/allsubcategories', function() {
+    return Subcategory::latest()->get();
 });
 Route::get('/categorycodes/{category}', function(Category $category) {
-    return $category->codes()->where('code_id', 0)->get();
+    return $category->codes()->where('code_id', 0)->latest()->get();
 });
 Route::get('/categorysubcategories/{category}', function(Category $category) {
     return $category->subcategories()->get();

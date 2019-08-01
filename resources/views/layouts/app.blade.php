@@ -47,13 +47,13 @@
                             <a class="nav-link" href="/">Codes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/categories">Manage Categories</a>
+                            <a class="nav-link" href="/categories">Manage Sections</a>
                         </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
+                    {{-- <ul class="navbar-nav ml-auto">
+                        <!- Authentication Links ->
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -82,7 +82,7 @@
                                 </div>
                             </li>
                         @endguest
-                    </ul>
+                    </ul> --}}
                 </div>
             </div>
         </nav>

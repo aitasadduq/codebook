@@ -2,7 +2,7 @@
 @section('content')
 @include('partials.success')
 	<div class="container text-center col-md-4">
-		<h1>View Categories</h1>
+		<h1>View Sections</h1>
 		<br>
 		<ul class="list-group">
 			@foreach ($categories as $category)
@@ -10,6 +10,6 @@
 			@endforeach
 		</ul>
 		<br>
-		<a href="/categories/create" class="btn btn-primary">Add New Category</a>
+		<a href="/categories/create" class="btn btn-primary">Add New Section</a>
 	</div>
 @endsection

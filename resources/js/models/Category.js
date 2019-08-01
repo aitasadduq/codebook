@@ -3,6 +3,17 @@ class Category {
         return axios.get('/allcodes').
             then(({data}) => then(data));
     }
+    static allSubcategories(then) {
+        return axios.get('/allsubcategories').
+            then(({data}) => {
+                let subs = data;
+                let stacks = [];
+                subs.forEach(sub => {
+                    stacks.push({checked: false, value: sub});
+                });
+                then(stacks);
+            });
+    }
     static codes(id, then) {
         return axios.get('/categorycodes/' + id)
             .then(({data}) => then(data));

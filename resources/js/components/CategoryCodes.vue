@@ -1,12 +1,15 @@
 <template>
     <div>
-        <div class="text-center"><h1>{{ name }} Codes</h1></div>
+        <div class="text-center"><h1>Latest {{ name }} Codes</h1></div>
         <br>
         <div class="row">
             <div class="col-md-3">
+                <a style="width: 100%" class="btn btn-primary" href="/codes/create">Add New Code</a>
+                <div><br></div>
+                <h5>Select Section</h5>
                 <div class="dropdown">
                     <select v-model="category_id" style="width: 100%;" class="btn btn-primary dropdown-toggle">
-                        <option :value="`-1`">All Sections</option>
+                        <option value="-1">All Sections</option>
                         <option v-for="cat in categories" :value="cat['id']">{{ cat['title'] }}</option>
                     </select>
                 </div>
@@ -18,7 +21,8 @@
                     </div>
                 </form>
                 <br>
-                <div v-show="category_id != '-1'" class="card">
+                <!-- <div v-show="category_id != '-1'" class="card"> -->
+                <div class="card">
                     <div class="card-body text-center">
                         <h3 class="card-title">Categories</h3>
                     </div>
@@ -42,11 +46,13 @@
                     </div>
                     <h1></h1>
                 </div>
-                <my-code
-                    :my-code="mycode"
-                    :selected-filters="selectedFilters"
-                    v-for="mycode in filteredCodes"
-                ></my-code>
+                <div>
+                    <my-code
+                        :my-code="mycode"
+                        :selected-filters="selectedFilters"
+                        v-for="mycode in filteredCodes"
+                    ></my-code>
+                </div>
             </div>
         </div>
     </div>
@@ -85,7 +91,8 @@
                 if (item_id == '-1') {
                     Category.allCodes(categorycodes => (this.codes = categorycodes));
                     Category.allCodes(categorycodes => (this.filteredCodes = categorycodes));
-                    this.name = 'All';
+                    Category.allSubcategories(subs => (this.subcategories = subs));
+                    this.name = '';
                 } else {
                     Category.codes(item_id, categorycodes => (this.codes = categorycodes));
                     Category.codes(item_id, categorycodes => (this.filteredCodes = categorycodes));
