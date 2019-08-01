@@ -4,11 +4,12 @@
 @include('partials.success')
 <div class="row">
 	<div class="col-md-2">
-		<form method="GET" action="/categories/{{ $code->category->id }}/codes">
+		{{-- <form method="GET" action="/categories/{{ $code->category->id }}/codes">
 			@csrf
 			<input type="hidden" name="is_filter" value="0">
 			<input class="btn btn-primary" type="submit" name="submit" value="< All Codes">
-		</form>
+		</form> --}}
+		<a class="btn btn-primary" href="/">All Codes</a>
 		<br>
 	</div>
 	<div class="text-center col-md-8">

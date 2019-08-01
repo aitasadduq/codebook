@@ -2,6 +2,7 @@
 
 use App\Code;
 use App\Category;
+use App\Subcategory;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,9 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/allcodes', function() {
     return Code::where('code_id', 0)->latest()->get();
+});
+Route::get('/allsubcategories', function() {
+    return Subcategory::latest()->get();
 });
 Route::get('/categorycodes/{category}', function(Category $category) {
     return $category->codes()->where('code_id', 0)->latest()->get();

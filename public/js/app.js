@@ -1758,6 +1758,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1799,7 +1800,10 @@ __webpack_require__.r(__webpack_exports__);
         _models_Category_js__WEBPACK_IMPORTED_MODULE_0__["default"].allCodes(function (categorycodes) {
           return _this.filteredCodes = categorycodes;
         });
-        this.name = 'All';
+        _models_Category_js__WEBPACK_IMPORTED_MODULE_0__["default"].allSubcategories(function (subs) {
+          return _this.subcategories = subs;
+        });
+        this.name = '';
       } else {
         _models_Category_js__WEBPACK_IMPORTED_MODULE_0__["default"].codes(item_id, function (categorycodes) {
           return _this.codes = categorycodes;
@@ -37339,7 +37343,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "text-center" }, [
-      _c("h1", [_vm._v(_vm._s(_vm.name) + " Codes")])
+      _c("h1", [_vm._v("Latest " + _vm._s(_vm.name) + " Codes")])
     ]),
     _vm._v(" "),
     _c("br"),
@@ -37357,6 +37361,8 @@ var render = function() {
         ),
         _vm._v(" "),
         _vm._m(0),
+        _vm._v(" "),
+        _c("h5", [_vm._v("Select Section")]),
         _vm._v(" "),
         _c("div", { staticClass: "dropdown" }, [
           _c(
@@ -37434,6 +37440,69 @@ var render = function() {
         _vm._v(" "),
         _c("br"),
         _vm._v(" "),
+        _c("div", { staticClass: "card" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c(
+            "ul",
+            { staticClass: "list-group list-group-flush" },
+            _vm._l(_vm.subcategories, function(sub) {
+              return _c("li", { staticClass: "list-group-item" }, [
+                _c("div", { staticClass: "form-check" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: sub.checked,
+                        expression: "sub.checked"
+                      }
+                    ],
+                    staticClass: "form-check-input",
+                    attrs: { type: "checkbox" },
+                    domProps: {
+                      checked: Array.isArray(sub.checked)
+                        ? _vm._i(sub.checked, null) > -1
+                        : sub.checked
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = sub.checked,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = null,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(sub, "checked", $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                sub,
+                                "checked",
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(sub, "checked", $$c)
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("label", { staticClass: "form-check-label" }, [
+                    _vm._v(_vm._s(sub.value["title"]))
+                  ])
+                ])
+              ])
+            }),
+            0
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-9" }, [
         _c(
           "div",
           {
@@ -37441,128 +37510,48 @@ var render = function() {
               {
                 name: "show",
                 rawName: "v-show",
-                value: _vm.category_id != "-1",
-                expression: "category_id != '-1'"
+                value: _vm.selectedFilters.length > 0,
+                expression: "selectedFilters.length > 0"
               }
-            ],
-            staticClass: "card"
+            ]
           },
           [
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "ul",
-              { staticClass: "list-group list-group-flush" },
-              _vm._l(_vm.subcategories, function(sub) {
-                return _c("li", { staticClass: "list-group-item" }, [
-                  _c("div", { staticClass: "form-check" }, [
-                    _c("input", {
-                      directives: [
+            _vm._l(_vm.selectedFilters, function(fil) {
+              return _c("div", { staticStyle: { display: "inline" } }, [
+                _c("h6", { staticStyle: { display: "inline" } }, [
+                  _c(
+                    "span",
+                    { staticClass: "btn btn-primary btn-lg badge badge-pill" },
+                    [
+                      _c(
+                        "button",
                         {
-                          name: "model",
-                          rawName: "v-model",
-                          value: sub.checked,
-                          expression: "sub.checked"
-                        }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: { type: "checkbox" },
-                      domProps: {
-                        checked: Array.isArray(sub.checked)
-                          ? _vm._i(sub.checked, null) > -1
-                          : sub.checked
-                      },
-                      on: {
-                        change: function($event) {
-                          var $$a = sub.checked,
-                            $$el = $event.target,
-                            $$c = $$el.checked ? true : false
-                          if (Array.isArray($$a)) {
-                            var $$v = null,
-                              $$i = _vm._i($$a, $$v)
-                            if ($$el.checked) {
-                              $$i < 0 &&
-                                _vm.$set(sub, "checked", $$a.concat([$$v]))
-                            } else {
-                              $$i > -1 &&
-                                _vm.$set(
-                                  sub,
-                                  "checked",
-                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                                )
+                          staticClass: "btn btn-primary btn-sm",
+                          staticStyle: { color: "yellow" },
+                          on: {
+                            click: function($event) {
+                              return _vm.removeItem(fil["id"])
                             }
-                          } else {
-                            _vm.$set(sub, "checked", $$c)
                           }
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("label", { staticClass: "form-check-label" }, [
-                      _vm._v(_vm._s(sub.value["title"]))
-                    ])
-                  ])
-                ])
-              }),
-              0
-            )
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-md-9" },
-        [
-          _c(
-            "div",
-            {
-              directives: [
-                {
-                  name: "show",
-                  rawName: "v-show",
-                  value: _vm.selectedFilters.length > 0,
-                  expression: "selectedFilters.length > 0"
-                }
-              ]
-            },
-            [
-              _vm._l(_vm.selectedFilters, function(fil) {
-                return _c("div", { staticStyle: { display: "inline" } }, [
-                  _c("h6", { staticStyle: { display: "inline" } }, [
-                    _c(
-                      "span",
-                      {
-                        staticClass: "btn btn-primary btn-lg badge badge-pill"
-                      },
-                      [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary btn-sm",
-                            staticStyle: { color: "yellow" },
-                            on: {
-                              click: function($event) {
-                                return _vm.removeItem(fil["id"])
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "fa fa-close" })]
-                        ),
-                        _vm._v(" " + _vm._s(fil["title"]))
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticStyle: { display: "inline" } })
-                ])
-              }),
-              _vm._v(" "),
-              _c("h1")
-            ],
-            2
-          ),
-          _vm._v(" "),
+                        },
+                        [_c("i", { staticClass: "fa fa-close" })]
+                      ),
+                      _vm._v(" " + _vm._s(fil["title"]))
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", { staticStyle: { display: "inline" } })
+              ])
+            }),
+            _vm._v(" "),
+            _c("h1")
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
           _vm._l(_vm.filteredCodes, function(mycode) {
             return _c("my-code", {
               attrs: {
@@ -37570,10 +37559,10 @@ var render = function() {
                 "selected-filters": _vm.selectedFilters
               }
             })
-          })
-        ],
-        2
-      )
+          }),
+          1
+        )
+      ])
     ])
   ])
 }
@@ -50298,18 +50287,34 @@ function () {
       });
     }
   }, {
+    key: "allSubcategories",
+    value: function allSubcategories(then) {
+      return axios.get('/allsubcategories').then(function (_ref2) {
+        var data = _ref2.data;
+        var subs = data;
+        var stacks = [];
+        subs.forEach(function (sub) {
+          stacks.push({
+            checked: false,
+            value: sub
+          });
+        });
+        then(stacks);
+      });
+    }
+  }, {
     key: "codes",
     value: function codes(id, then) {
-      return axios.get('/categorycodes/' + id).then(function (_ref2) {
-        var data = _ref2.data;
+      return axios.get('/categorycodes/' + id).then(function (_ref3) {
+        var data = _ref3.data;
         return then(data);
       });
     }
   }, {
     key: "subcategories",
     value: function subcategories(id, then) {
-      return axios.get('/categorysubcategories/' + id).then(function (_ref3) {
-        var data = _ref3.data;
+      return axios.get('/categorysubcategories/' + id).then(function (_ref4) {
+        var data = _ref4.data;
         var subs = data;
         var stacks = [];
         subs.forEach(function (sub) {
@@ -50324,16 +50329,16 @@ function () {
   }, {
     key: "title",
     value: function title(id, then) {
-      return axios.get('/categorytitle/' + id).then(function (_ref4) {
-        var data = _ref4.data;
+      return axios.get('/categorytitle/' + id).then(function (_ref5) {
+        var data = _ref5.data;
         return then(data);
       });
     }
   }, {
     key: "code_subcategories",
     value: function code_subcategories(id, then) {
-      return axios.get('/codesubcategories/' + id).then(function (_ref5) {
-        var data = _ref5.data;
+      return axios.get('/codesubcategories/' + id).then(function (_ref6) {
+        var data = _ref6.data;
         return then(data);
       });
     }
