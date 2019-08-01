@@ -2,9 +2,13 @@
 @section('content')
 @include('partials.errors')
 <div class="card text-center">
-	<div class="card-body">
+	<div id="two" class="card-body">
 		<h1 class="card-title">Add New Code</h1>
-		<form method="POST" action="/categories/{{ $category->id }}/codes">
+		<create-code
+			:categories="{{ $categories->toJson() }}"
+			:default-category="{{ $categories->first()->id }}"
+		></create-code>
+		{{-- <form method="POST" action="/categories/{{ $category->id }}/codes">
 			@csrf
 			<input type="hidden" name="code_id" value="0">
 			<div class="row">
@@ -44,7 +48,7 @@
 			<div class="form-group">
 				<input class="btn btn-primary" type="submit" name="submit" value="Add Code">
 			</div>
-		</form>
+		</form> --}}
 	</div>
 </div>
 @include('partials.editor')

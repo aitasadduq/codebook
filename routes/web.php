@@ -19,12 +19,12 @@ Route::get('/', function () {
     return view('welcome', compact('categories'));
 });
 Route::get('/categories/{category}/codes', 'CodeController@index');
-Route::get('/categories/{category}/codes/create', 'CodeController@create');
+// Route::get('/categories/{category}/codes/create', 'CodeController@create');
 Route::post('/categories/{category}/codes', 'CodeController@store');
 Route::post('/categories/{category}/subcategories', 'SubcategoryController@store');
 
 Route::resource('categories', 'CategoryController');
-Route::resource('codes', 'CodeController')->except(['index', 'create', 'store']);
+Route::resource('codes', 'CodeController')->except(['index', 'store']);
 Route::resource('subcategories', 'SubcategoryController')->except(['store']);
 
 Auth::routes();

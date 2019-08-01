@@ -4,9 +4,14 @@
         <br>
         <div class="row">
             <div class="col-md-3">
+                <!-- <button style="width: 100%;" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    Add New Code
+                </button> -->
+                <a style="width: 100%" class="btn btn-primary" href="/codes/create">Add New Code</a>
+                <div><br></div>
                 <div class="dropdown">
                     <select v-model="category_id" style="width: 100%;" class="btn btn-primary dropdown-toggle">
-                        <option :value="`-1`">All Sections</option>
+                        <option value="-1">All Sections</option>
                         <option v-for="cat in categories" :value="cat['id']">{{ cat['title'] }}</option>
                     </select>
                 </div>
