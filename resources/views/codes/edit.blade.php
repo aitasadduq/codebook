@@ -11,7 +11,7 @@
 			<div class="row">
 				@if($parent)
 					<div class="col-md-4">
-						<h3>Select Subcategories</h3>
+						<h3>Select Categories</h3>
 						@if ($code->category->subCategories->count() === 0)
 							@php
 								$code->category->addSubCategory(['title' => $code->category->title]);

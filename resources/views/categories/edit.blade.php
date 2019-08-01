@@ -6,7 +6,7 @@
 	@include('partials.errors')
 		<div class="card text-center">
 			<div class="card-body">
-				<h1 class="card-title">Edit Category</h1>
+				<h1 class="card-title">Edit Section</h1>
 				<form method="POST" action="/categories/{{ $category->id }}">
 					@csrf
 					@method('PATCH')
@@ -18,13 +18,13 @@
 						<label for="description">Description</label>
 						<textarea id="description" name="description" class="form-control">{{ $category->description }}</textarea>
 					</div>
-					<input class="btn btn-primary" type="submit" name="submit" value="Edit Category">
+					<input class="btn btn-primary" type="submit" name="submit" value="Edit Section">
 				</form>
 				<br>
 				<form method="POST" action="/categories/{{ $category->id }}">
 					@csrf
 					@method('DELETE')
-					<input class="btn btn-danger" type="submit" name="submit" value="Delete Category">
+					<input class="btn btn-danger" type="submit" name="submit" value="Delete Section">
 				</form>
 			</div>
 		</div>

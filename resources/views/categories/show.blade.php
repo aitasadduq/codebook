@@ -7,7 +7,7 @@
 		<br>
 		<h4>{{ $category->description }}</h4>
 		<br>
-		<h2>Subcategories</h2>
+		<h2>Categories</h2>
 		@if ($category->subCategories->count())
 		<div class="row">
 			<div class="col-md-4"></div>
@@ -30,14 +30,14 @@
 						@csrf
 						<input class="form-control" type="text" name="title" placeholder="Title">
 						<br>
-						<input class="btn btn-primary" type="submit" name="submit" value="Add Subcategory">
+						<input class="btn btn-primary" type="submit" name="submit" value="Add Category">
 					</form>
 				</div>
 			</div>
 			<div class="col-md-4"></div>
 		</div>
 		<br>
-		<a class="btn btn-primary" href="/categories">View All Categories</a>
-		<a class="btn btn-primary" href="/categories/{{ $category->id }}/edit">Edit Category</a>
+		<a class="btn btn-primary" href="/categories">View All Sections</a>
+		<a class="btn btn-primary" href="/categories/{{ $category->id }}/edit">Edit Section</a>
 	</div>
 @endsection

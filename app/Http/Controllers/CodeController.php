@@ -32,9 +32,10 @@ class CodeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Category $category)
+    public function create()
     {
-        return view('codes.create', compact('category'));
+        $categories = Category::get();
+        return view('codes.create', compact('categories'));
     }
 
     /**
@@ -52,7 +53,7 @@ class CodeController extends Controller
             return redirect('/codes/'.strval($request->get('code_id')))->with('success', 'New Code Added!');
         } elseif ($request->get('code_id') == 0) {
             $code = Code::create($attributes);
-            return redirect('/categories/'.strval($category->id).'/codes')->with('success', 'New Code Added!');
+            return redirect('/')->with('success', 'New Code Added!');
         }
     }
 
